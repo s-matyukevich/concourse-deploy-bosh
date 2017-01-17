@@ -1,0 +1,55 @@
+#!/bin/bash
+
+bosh_pass=$(vault read -field=bosh-pass $VAULT_PROPERTIES_PATH)
+
+pcf_management_dns=""
+for i in $PCF_MANAGEMENT_DNS
+do
+  pcf_management_dns+="--network-dns-1 $i "
+done
+
+pcf_services_dns=""
+for i in $PCF_SERVICES_DNS
+do
+  pcf_services_dns+="--network-dns-2 $i "
+done
+
+pcf_deployment_dns=""
+for i in $PCF_DEPLOYMENT_DNS
+do
+  pcf_deployment_dns+="--network-dns-3 $i "
+done
+
+./omg-linux deploy-cloudconfig \
+  --bosh-url $BOSH_IP \
+  --bosh-port 25555 \
+  --bosh-user admin \
+  --bosh-pass $bohsh_pass \
+  --ssl-ignore \
+  photon-cloudconfigplugin-linux \
+  --az az1 \
+  --network-name-1 pcf-management \
+  --network-az-1 az1 \
+  --network-cidr-1 $PCF_MANAGEMENT_CIDR \
+  --network-gateway-1 $PCF_MANAGEMENT_GATEWAY \
+  $pcf_management_dns
+  --network-reserved-1 $PCF_MANAGEMENT_RESERVED \
+  --network-static-1 $PCF_MANAGEMENT_STATIC \
+  --photon-network-name-1 $PCF_MANAGEMENT_PHOTON_ID \
+  --network-name-2 pcf-services \
+  --network-az-2 az1 \
+  --network-cidr-2 $PCF_SERVICES_CIDR \
+  --network-gateway-2 $PCF_SERVICES_GATEWAY \
+  $pcf_services_dns
+  --network-reserved-2 $PCF_SERVICES_RESERVED \
+  --network-static-2 $PCF_SERVICES_STATIC \
+  --photon-network-name-2 $PCF_SERVICES_PHOTON_ID \
+  --network-name-3 pcf-deployment \
+  --network-az-3 az1 \
+  --network-cidr-3 $PCF_DEPLOYMENT_CIDR \
+  --network-gateway-3 $PCF_DEPLOYMENT_GATEWAY \
+  $pcf_services_dns
+  --network-reserved-3 $PCF_DEPLOYMENT_RESERVED \
+  --network-static-3 $PCF_DEPLOYMENT_STATIC \
+  --photon-network-name-3 $PCF_DEPLOYMENT_PHOTON_ID \
+
