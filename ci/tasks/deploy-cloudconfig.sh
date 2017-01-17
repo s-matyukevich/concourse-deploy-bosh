@@ -32,7 +32,7 @@ done
   --network-az-1 az1 \
   --network-cidr-1 $PCF_MANAGEMENT_CIDR \
   --network-gateway-1 $PCF_MANAGEMENT_GATEWAY \
-  $pcf_management_dns
+  --network-dns-1 $PCF_MANAGEMENT_DNS
   --network-reserved-1 $PCF_MANAGEMENT_RESERVED \
   --network-static-1 $PCF_MANAGEMENT_STATIC \
   --photon-network-name-1 $PCF_MANAGEMENT_PHOTON_ID \
@@ -40,7 +40,7 @@ done
   --network-az-2 az1 \
   --network-cidr-2 $PCF_SERVICES_CIDR \
   --network-gateway-2 $PCF_SERVICES_GATEWAY \
-  $pcf_services_dns
+  --network-dns-2 $PCF_SERVICES_DNS
   --network-reserved-2 $PCF_SERVICES_RESERVED \
   --network-static-2 $PCF_SERVICES_STATIC \
   --photon-network-name-2 $PCF_SERVICES_PHOTON_ID \
@@ -48,7 +48,7 @@ done
   --network-az-3 az1 \
   --network-cidr-3 $PCF_DEPLOYMENT_CIDR \
   --network-gateway-3 $PCF_DEPLOYMENT_GATEWAY \
-  $pcf_services_dns
+  --network-dns-3 $PCF_DEPLOYMENT_DNS
   --network-reserved-3 $PCF_DEPLOYMENT_RESERVED \
   --network-static-3 $PCF_DEPLOYMENT_STATIC \
   --photon-network-name-3 $PCF_DEPLOYMENT_PHOTON_ID \

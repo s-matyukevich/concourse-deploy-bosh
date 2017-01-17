@@ -154,14 +154,20 @@ jobs:
           PCF_MANAGEMENT_CIDR: {{pcf-management-cidr}}
           PCF_MANAGEMENT_GATEWAY: {{pcf-management-gateway}}
           PCF_MANAGEMENT_DNS: {{pcf-management-dns}}
+          PCF_MANAGEMENT_RESERVED: {{pcf-management-reserved}}
+          PCF_MANAGEMENT_STATIC: {{pcf-management-static}}
           PCF_MANAGEMENT_PHOTON_ID: {{pcf-management-photon-id}}
           PCF_SERVICES_CIDR: {{pcf-services-cidr}}
           PCF_SERVICES_GATEWAY: {{pcf-services-gateway}}
           PCF_SERVICES_DNS: {{pcf-services-dns}}
+          PCF_SERVICES_RESERVED: {{pcf-services-reserved}}
+          PCF_SERVICES_STATIC: {{pcf-services-static}}
           PCF_SERVICES_PHOTON_ID: {{pcf-services-photon-id}}
           PCF_DEPLOYMENT_CIDR: {{pcf-deployment-cidr}}
           PCF_DEPLOYMENT_GATEWAY: {{pcf-deployment-gateway}}
           PCF_DEPLOYMENT_DNS: {{pcf-deployment-dns}}
+          PCF_DEPLOYMENT_RESERVED: {{pcf-deployment-reserved}}
+          PCF_DEPLOYMENT_STATIC: {{pcf-deployment-static}}
           PCF_DEPLOYMENT_PHOTON_ID: {{pcf-deployment-photon-id}}
 - name: update-pcf-pipeline
   plan:
@@ -195,6 +201,8 @@ jobs:
           PRODUCT_VERSION: {{product-version}}
           PRODUCT_PLUGIN: {{product-version}}
           PIVNET_API_TOKEN: {{pivnet-api-token}}
+          SKIP_HAPROXY: {{skip-haproxy}}
+          HAPROXY_IP: {{haproxy-ip}}
           STEMCELL_CPI_GLOB: {{stemcell-cpi-glob}}
           STEMCELL_VERSION: {{stemcell-version}}
     - put: pcf-pipeline

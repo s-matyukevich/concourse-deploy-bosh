@@ -1,33 +1,19 @@
 #!/bin/bash
 
-all_ips=$(nmap -sL $PCF_DEPLOYMENT_CIDR | grep "Nmap scan report" | awk '{print $NF}')
+all_ips=$(prips $(echo "$PCF_DEPLOYMENT_STATIC" | sed 's/,/ /'))
 IFS=$'\n'
 all_ips=($all_ips)
-IFS='-'
-reserved_ips=($PCF_DEPLOYMENT_RESERVED)
-available_ips=()
-reserved=false
-for i in $all_ips
-do
-  if [ "$i" -eq "$reserved_ips[0]" ]
-  then
-    reserved=true; 
-  fi
-  if [ "$i" -eq "$reserved_ips[1]" ]
-  then
-    reserved=false; 
-  fi
-  if [ "$reserved" = false ] ; then
-    available_ips+=("all_ips[$i]")
-  fi
-done
 
 index=0
 get_ips(){
   res=""
   for ((i = 0; i < $1; i++))
   do
-    res="$res,available_ips[$index]"
+    if ["$all_ips[$index]" -ne "$HAPROXY_IP"]
+    then
+      res="$res,$all_ips[$index]"
+      i=$((i - 1))
+    fi
     index=$((index + 1))
   done
   echo "$res"
@@ -61,6 +47,7 @@ cat > deployment-props.json <<EOF
   "etcd-machine-ip": "$(get_ips(3))",
   "etcd-vm-type": "large",
   "haproxy-vm-type": "large",
+  "haproxy-ip": "$HAPROXY_IP",
   "loggregator-traffic-controller-ip": "",
   "loggregator-traffic-controller-vmtype": "large",
   "mysql-disk-type": "51200",
@@ -102,7 +89,7 @@ product-slug: $PRODUCT_SLUG
 product-version: $PRODUCT_VERSION
 product-plugin: $PRODUCT_PLUGIN
 pivnet-api-token: $PIVNET_API_TOKEN
-skip-haproxy: true
+skip-haproxy: $SKIP_HAPROXY
 stemcell-cpi-glob: '$STEMCELL_CPI_GLOB'
 stemcell-version: $STEMCELL_VERSION
 vault-addr: $VAULT_ADDR
