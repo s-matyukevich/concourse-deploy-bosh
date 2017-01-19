@@ -21,7 +21,7 @@ resources:
   type: github-bosh-release
   check_every: 4h
   source:
-    user: cloudfoundry-incubator
+    user: s-matyukevich
     repository: bosh-photon-cpi-release
 - name: pcf-pipeline
   type: concourse-pipeline
@@ -38,10 +38,6 @@ resource_types:
   type: docker-image
   source:
     repository: smatyukevich/github-bosh-release-resource
-- name: go-app
-  type: docker-image
-  source:
-    repository: smatyukevich/go-app-resource
 
 jobs:
 - name: create-flavors
