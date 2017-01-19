@@ -77,6 +77,8 @@ jobs:
         run:
           path: concourse-deploy-bosh/ci/tasks/deploy-bosh.sh
         params:
+          VAULT_ADDR: {{vault-addr}}
+          VAULT_TOKEN: {{vault-token}}
           PCF_MANAGEMENT_CIDR: {{pcf-management-cidr}}
           PCF_MANAGEMENT_GATEWAY: {{pcf-management-gateway}}
           PCF_MANAGEMENT_DNS: {{pcf-management-dns}}
