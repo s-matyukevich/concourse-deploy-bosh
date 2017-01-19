@@ -1,7 +1,7 @@
 #!/bin/bash
 
 photon target set $PHOTON_URL  -c
-photon target login -u $PRHOTON_USER -p $PHOTON_PASSWORD
+photon target login -u $PRHOTON_USER -p "$PHOTON_PASSWORD"
 photon tenant set $PHOTON_TENANT 
 photon project set $pHOTON_PROJECT 
 
