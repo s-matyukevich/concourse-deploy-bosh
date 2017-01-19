@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash 
 
 chmod +x omg-cli/omg-linux
 
