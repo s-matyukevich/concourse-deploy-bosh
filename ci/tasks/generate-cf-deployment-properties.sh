@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 all_ips=$(prips $(echo "$PCF_DEPLOYMENT_STATIC" | sed 's/,/ /'))
 IFS=$'\n'
@@ -68,8 +68,8 @@ cat > deployment-props.json <<EOF
 }
 EOF
 
-bosh_pass=$(vault read -field=bosh-pass secret/bosh-$DEPLOYMENT_NAME-props)
-bosh_cacert=$(vault read -field=bosh-cacert secret/bosh-$DEPLOYMENT_NAME-props)
+bosh_pass=$(vault read -field=bosh-pass secret/bosh-$DEPLOYMENT_NAME-props || true)
+bosh_cacert=$(vault read -field=bosh-cacert secret/bosh-$DEPLOYMENT_NAME-props || true)
 
 cat > pcf-pipeline-vars.yml <<EOF
 bosh-cacert: |

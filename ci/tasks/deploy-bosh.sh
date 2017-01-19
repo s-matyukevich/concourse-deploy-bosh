@@ -4,7 +4,7 @@ chmod +x omg-cli/omg-linux
 
 sha1=$(sha1sum bosh-photon-cpi/release.tgz)
 
-nats_pass=$(vault read -field=nats-pass secret/bosh-$DEPLOYMENT_NAME-props)
+nats_pass=$(vault read -field=nats-pass secret/bosh-$DEPLOYMENT_NAME-props || true)
 
 if [ -n $nats_pass]; then
   nats="--nats-pwd $nats_pass"

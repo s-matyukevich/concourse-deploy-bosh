@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 photon target set $PHOTON_URL  -c
 photon target login -u $PHOTON_USER -p "$PHOTON_PASSWORD"
