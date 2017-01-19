@@ -4,6 +4,12 @@ chmod +x omg-cli/omg-linux
 
 sha1=$(sha1sum bosh-photon-cpi/release.tgz)
 
+nats_pass=$(vault read -field=nats-pass secret/bosh-$DEPLOYMENT_NAME-props)
+
+if [ -n $nats_pass]; then
+  nats="--nats-pwd $nats_pass"
+fi
+
 omg-cli/omg-linux photon   \   
   --mode uaa   \   
   --cidr $PCF_MANAGEMENT_CIDR   \   
@@ -20,3 +26,5 @@ omg-cli/omg-linux photon   \
   --photon-project-id $PHOTON_PROJECT \
   --photon-network-id $PCF_MANAGEMENT_PHOTON_ID \
   --ntp-server $NTP_SERVER \
+  $nats
+
