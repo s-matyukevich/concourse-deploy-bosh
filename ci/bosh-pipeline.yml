@@ -83,6 +83,7 @@ jobs:
           PCF_MANAGEMENT_GATEWAY: {{pcf-management-gateway}}
           PCF_MANAGEMENT_DNS: {{pcf-management-dns}}
           PCF_MANAGEMENT_PHOTON_ID: {{pcf-management-photon-id}}
+          BOSH_IP: {{bosh-ip}}
           DEPLOYMENT_NAME: {{deployment-name}}
           PHOTON_URL: {{photon-url}}
           PHOTON_USER: {{photon-user}}
