@@ -45,18 +45,10 @@ resource_types:
   type: docker-image
   source:
     repository: smatyukevich/github-bosh-release-resource
-    tag: latest-final
 - name: go-app
   type: docker-image
   source:
     repository: smatyukevich/go-app-resource
-    tag: latest-final
-- name: vault
-  type: vault
-  source:
-    url: https://secure.legitcompany.com:8200
-    role: build-server
-    nonce: cantguessme
 
 jobs:
 - name: create-flavors
