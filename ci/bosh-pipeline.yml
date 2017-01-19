@@ -89,6 +89,8 @@ jobs:
           NTP_SERVER: {{ntp-server}}
         inputs:
         - name: concourse-deploy-bosh
+        - name: bosh-photon-cpi
+        - name: omg-cli
     - task: update-vault
       config:
         platform: linux
@@ -104,7 +106,6 @@ jobs:
           DEPLOYMENT_NAME: {{deployment-name}}
         inputs:
         - name: concourse-deploy-bosh
-        - name: bosh-photon-cpi
 - name: deploy-cloudconfig
   plan:
     - aggregate:
