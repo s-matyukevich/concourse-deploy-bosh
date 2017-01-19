@@ -49,6 +49,6 @@ photon flavor list | grep "core-100 .*ephemeral-disk" || photon -n flavor create
 photon flavor list | grep "core-200 .*ephemeral-disk" || photon -n flavor create -n core-200 -k ephemeral-disk -c "ephemeral-disk 1 COUNT"
 photon flavor list | grep "core-300 .*ephemeral-disk" || photon -n flavor create -n core-300 -k ephemeral-disk -c "ephemeral-disk 1 COUNT"
 photon flavor list | grep "core-100 .*persistent-disk" || photon -n flavor create -n core-100 -k persistent-disk -c "persistent-disk 1 COUNT"
-photon flavor list | grep "core-120 .*persistent-disk" || photon -n flavor create -n core-200 -k persistent-disk -c "persistent-disk 1 COUNT"
-photon flavor list | grep "core-130 .*persistent-disk" || photon -n flavor create -n core-300 -k persistent-disk -c "persistent-disk 1 COUNT"
+photon flavor list | grep "core-200 .*persistent-disk" || photon -n flavor create -n core-200 -k persistent-disk -c "persistent-disk 1 COUNT"
+photon flavor list | grep "core-300 .*persistent-disk" || photon -n flavor create -n core-300 -k persistent-disk -c "persistent-disk 1 COUNT"
 
