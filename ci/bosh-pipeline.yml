@@ -29,7 +29,7 @@ resources:
   source:
     package: github.com/vmware/photon-controller-cli
     cmd: make build
-    out: bin/photon-controller-cli
+    out: bin/photon
 - name: pcf-pipeline
   type: concourse-pipeline
   source:
