@@ -33,16 +33,12 @@ resources:
 - name: pcf-pipeline
   type: concourse-pipeline
   source:
-    target: {{concourse-url}}
+    target: ((concourse-url))
     insecure: true
     teams:
     - name: main
-      username: {{concourse-user}}
-      password: {{concourse-password}}
-- name: flavors-version
-  type: version
-- name: bosh-deployment-version
-  type: version
+      username: ((concourse-user))
+      password: ((concourse-password))
 
 resource_types:
 - name: github-bosh-release
@@ -55,11 +51,6 @@ resource_types:
   source:
     repository: smatyukevich/go-app-resource
     tag: latest-final
-- name: version
-  type: docker-image
-  source:
-    repository: meteogroup/concourse-version-resource
-    tag: latest-final
 - name: vault
   type: vault
   source:
@@ -71,6 +62,7 @@ jobs:
 - name: create-flavors
   plan:
     - aggregate:
+      - get: concourse-deploy-bosh
       - get: photon-cli
     - task: create-flavors
       config:
@@ -82,20 +74,17 @@ jobs:
         run:
           path: concourse-deploy-bosh/ci/tasks/create-flavors.sh
         params:
-          PHOTON_URL: {{photon-url}}
-          PHOTON_USER: {{photon-user}}
-          PHOTON_PASSWORD: {{photon-password}}
-          PHOTON_TENANT: {{photon-tenant}}
-          PHOTON_PROJECT: {{photon-project}}
-    - put: flavors-version
+          PHOTON_URL: ((photon-url))
+          PHOTON_USER: ((photon-user))
+          PHOTON_PASSWORD: ((photon-password))
+          PHOTON_TENANT: ((photon-tenant))
+          PHOTON_PROJECT: ((photon-project))
 - name: deploy-bosh
   plan:
     - aggregate:
       - get: concourse-deploy-bosh
       - get: bosh-photon-cpi
       - get: omg-cli
-      - get: flavors-version
-        trigger: true
     - task: deploy
       config:
         platform: linux
@@ -106,16 +95,16 @@ jobs:
         run:
           path: concourse-deploy-bosh/ci/tasks/deploy-bosh.sh
         params:
-          PCF_MANAGEMENT_CIDR: {{pcf-management-cidr}}
-          PCF_MANAGEMENT_GATEWAY: {{pcf-management-gateway}}
-          PCF_MANAGEMENT_DNS: {{pcf-management-dns}}
-          PCF_MANAGEMENT_PHOTON_ID: {{pcf-management-photon-id}}
-          DIRECTOR_NAME: bosh-{{deployment-name}}
-          PHOTON_URL: {{photon-url}}
-          PHOTON_USER: {{photon-user}}
-          PHOTON_PASSWORD: {{photon-password}}
-          PHOTON_PROJECT: {{photon-project}}
-          NTP_SERVER: {{ntp-server}}
+          PCF_MANAGEMENT_CIDR: ((pcf-management-cidr))
+          PCF_MANAGEMENT_GATEWAY: ((pcf-management-gateway))
+          PCF_MANAGEMENT_DNS: ((pcf-management-dns))
+          PCF_MANAGEMENT_PHOTON_ID: ((pcf-management-photon-id))
+          DIRECTOR_NAME: bosh-((deployment-name))
+          PHOTON_URL: ((photon-url))
+          PHOTON_USER: ((photon-user))
+          PHOTON_PASSWORD: ((photon-password))
+          PHOTON_PROJECT: ((photon-project))
+          NTP_SERVER: ((ntp-server))
     - task: update-vault
       config:
         platform: linux
@@ -126,17 +115,14 @@ jobs:
         run:
           path: concourse-deploy-bosh/ci/tasks/update-vault.sh
         params:
-          VAULT_ADDR: {{vault-addr}}
-          VAULT_TOKEN: {{vault-token}}
-          VAULT_PROPERTIES_PATH: secret/bosh-{{deployment-name}}-props
-    - put: bosh-deployment-version
+          VAULT_ADDR: ((vault-addr))
+          VAULT_TOKEN: ((vault-token))
+          VAULT_PROPERTIES_PATH: secret/bosh-((deployment-name))-props
 - name: deploy-cloudconfig
   plan:
     - aggregate:
       - get: concourse-deploy-bosh
       - get: omg-cli
-      - get: bosh-deployment-version
-        trigger: true
     - task: deploy
       config:
         platform: linux
@@ -147,35 +133,32 @@ jobs:
         run:
           path: concourse-deploy-bosh/ci/tasks/deploy-cloudconfig.sh
         params:
-          VAULT_ADDR: {{vault-addr}}
-          VAULT_TOKEN: {{vault-token}}
-          VAULT_PROPERTIES_PATH: secret/bosh-{{deployment-name}}-props
-          BOSH_IP: {{bosh-ip}}
-          PCF_MANAGEMENT_CIDR: {{pcf-management-cidr}}
-          PCF_MANAGEMENT_GATEWAY: {{pcf-management-gateway}}
-          PCF_MANAGEMENT_DNS: {{pcf-management-dns}}
-          PCF_MANAGEMENT_RESERVED: {{pcf-management-reserved}}
-          PCF_MANAGEMENT_STATIC: {{pcf-management-static}}
-          PCF_MANAGEMENT_PHOTON_ID: {{pcf-management-photon-id}}
-          PCF_SERVICES_CIDR: {{pcf-services-cidr}}
-          PCF_SERVICES_GATEWAY: {{pcf-services-gateway}}
-          PCF_SERVICES_DNS: {{pcf-services-dns}}
-          PCF_SERVICES_RESERVED: {{pcf-services-reserved}}
-          PCF_SERVICES_STATIC: {{pcf-services-static}}
-          PCF_SERVICES_PHOTON_ID: {{pcf-services-photon-id}}
-          PCF_DEPLOYMENT_CIDR: {{pcf-deployment-cidr}}
-          PCF_DEPLOYMENT_GATEWAY: {{pcf-deployment-gateway}}
-          PCF_DEPLOYMENT_DNS: {{pcf-deployment-dns}}
-          PCF_DEPLOYMENT_RESERVED: {{pcf-deployment-reserved}}
-          PCF_DEPLOYMENT_STATIC: {{pcf-deployment-static}}
-          PCF_DEPLOYMENT_PHOTON_ID: {{pcf-deployment-photon-id}}
+          VAULT_ADDR: ((vault-addr))
+          VAULT_TOKEN: ((vault-token))
+          VAULT_PROPERTIES_PATH: secret/bosh-((deployment-name))-props
+          BOSH_IP: ((bosh-ip))
+          PCF_MANAGEMENT_CIDR: ((pcf-management-cidr))
+          PCF_MANAGEMENT_GATEWAY: ((pcf-management-gateway))
+          PCF_MANAGEMENT_DNS: ((pcf-management-dns))
+          PCF_MANAGEMENT_RESERVED: ((pcf-management-reserved))
+          PCF_MANAGEMENT_STATIC: ((pcf-management-static))
+          PCF_MANAGEMENT_PHOTON_ID: ((pcf-management-photon-id))
+          PCF_SERVICES_CIDR: ((pcf-services-cidr))
+          PCF_SERVICES_GATEWAY: ((pcf-services-gateway))
+          PCF_SERVICES_DNS: ((pcf-services-dns))
+          PCF_SERVICES_RESERVED: ((pcf-services-reserved))
+          PCF_SERVICES_STATIC: ((pcf-services-static))
+          PCF_SERVICES_PHOTON_ID: ((pcf-services-photon-id))
+          PCF_DEPLOYMENT_CIDR: ((pcf-deployment-cidr))
+          PCF_DEPLOYMENT_GATEWAY: ((pcf-deployment-gateway))
+          PCF_DEPLOYMENT_DNS: ((pcf-deployment-dns))
+          PCF_DEPLOYMENT_RESERVED: ((pcf-deployment-reserved))
+          PCF_DEPLOYMENT_STATIC: ((pcf-deployment-static))
+          PCF_DEPLOYMENT_PHOTON_ID: ((pcf-deployment-photon-id))
 - name: update-pcf-pipeline
   plan:
     - aggregate:
       - get: concourse-deploy-cloudfoundry
-      - get: bosh-deployment-version
-        passed: [deploy-cloudconfig]
-        trigger: true
     - task: generate-cf-deployment-properties
       config:
         platform: linux
@@ -186,29 +169,29 @@ jobs:
         run:
           path: concourse-deploy-bosh/ci/tasks/generate-cf-deployment-properties.sh
         params:
-          SYSTEM_DOMAIN: {{system-domain}}
-          APP_DOMAIN: {{app-domain}}
-          SYSLOG_ADDRESS: {{syslog-address}}
-          VAULT_ADDR: {{vault-addr}}
-          VAULT_TOKEN: {{vault-token}}
-          VAULT_PROPERTIES_PATH: secret/bosh-{{deployment-name}}-props
-          BOSH_IP: {{bosh-ip}}
-          CONCOURSE_URL: {{concourse-url}}
-          CONCOURSE_USER: {{concourse-user}}
-          CONCOURSE_PASSWORD: {{concourse-password}}
-          DEPLOYMENT_NAME: {{deployment-name}}
-          PRODUCT_SLUG: {{product-slug}}
-          PRODUCT_VERSION: {{product-version}}
-          PRODUCT_PLUGIN: {{product-version}}
-          PIVNET_API_TOKEN: {{pivnet-api-token}}
-          SKIP_HAPROXY: {{skip-haproxy}}
-          HAPROXY_IP: {{haproxy-ip}}
-          STEMCELL_CPI_GLOB: {{stemcell-cpi-glob}}
-          STEMCELL_VERSION: {{stemcell-version}}
+          SYSTEM_DOMAIN: ((system-domain))
+          APP_DOMAIN: ((app-domain))
+          SYSLOG_ADDRESS: ((syslog-address))
+          VAULT_ADDR: ((vault-addr))
+          VAULT_TOKEN: ((vault-token))
+          VAULT_PROPERTIES_PATH: secret/bosh-((deployment-name))-props
+          BOSH_IP: ((bosh-ip))
+          CONCOURSE_URL: ((concourse-url))
+          CONCOURSE_USER: ((concourse-user))
+          CONCOURSE_PASSWORD: ((concourse-password))
+          DEPLOYMENT_NAME: ((deployment-name))
+          PRODUCT_SLUG: ((product-slug))
+          PRODUCT_VERSION: ((product-version))
+          PRODUCT_PLUGIN: ((product-version))
+          PIVNET_API_TOKEN: ((pivnet-api-token))
+          SKIP_HAPROXY: ((skip-haproxy))
+          HAPROXY_IP: ((haproxy-ip))
+          STEMCELL_CPI_GLOB: ((stemcell-cpi-glob))
+          STEMCELL_VERSION: ((stemcell-version))
     - put: pcf-pipeline
       params:
         pipelines:
-        - name: deploy-cf-{{deployment-name}}
+        - name: deploy-cf-((deployment-name))
           team: main
           config_file: concourse-deploy-cloudfoundry/pcf-pipeline.yml
           vars_files:
