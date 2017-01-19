@@ -68,8 +68,8 @@ cat > deployment-props.json <<EOF
 }
 EOF
 
-bosh_pass=$(vault read -field=bosh-pass $VAULT_PROPERTIES_PATH)
-bosh_cacert=$(vault read -field=bosh-cacert $VAULT_PROPERTIES_PATH)
+bosh_pass=$(vault read -field=bosh-pass secret/bosh-$DEPLOYMENT_NAME-props)
+bosh_cacert=$(vault read -field=bosh-cacert secret/bosh-$DEPLOYMENT_NAME-props)
 
 cat > pcf-pipeline-vars.yml <<EOF
 bosh-cacert: |

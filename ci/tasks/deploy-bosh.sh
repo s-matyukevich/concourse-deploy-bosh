@@ -12,7 +12,7 @@ omg-cli/omg-linux photon   \
   --bosh-private-ip $BOSH_IP   \   
   --bosh-cpi-release-url "file://bosh-photon-cpi/release.tgz"   \   
   --bosh-cpi-release-sha $sha1   \   
-  --director-name $DIRECTOR_NAME   \   
+  --director-name bosh-$DEPLOYMENT_NAME   \   
   --photon-target $PHOTON_URL   \   
   --photon-user $PHOTON_USER   \   
   --photon-password $PHOTON_PASSWORD   \   

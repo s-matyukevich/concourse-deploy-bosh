@@ -1,6 +1,6 @@
 #!/bin/bash
 
-bosh_pass=$(vault read -field=bosh-pass $VAULT_PROPERTIES_PATH)
+bosh_pass=$(vault read -field=bosh-pass secret/bosh-$DEPLOYMENT_NAME-props)
 
 pcf_management_dns=""
 for i in $PCF_MANAGEMENT_DNS
