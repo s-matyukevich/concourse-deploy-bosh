@@ -3,7 +3,7 @@
 photon target set $PHOTON_URL  -c
 photon target login -u $PHOTON_USER -p "$PHOTON_PASSWORD"
 photon tenant set $PHOTON_TENANT 
-photon project set $pHOTON_PROJECT 
+photon project set $PHOTON_PROJECT 
 
 
 ## Create Photon Flavors for PCF
