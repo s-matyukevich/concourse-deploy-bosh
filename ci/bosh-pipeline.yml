@@ -71,6 +71,8 @@ jobs:
           PHOTON_PASSWORD: ((photon-password))
           PHOTON_TENANT: ((photon-tenant))
           PHOTON_PROJECT: ((photon-project))
+        inputs:
+        - name: concourse-deploy-bosh
 - name: deploy-bosh
   plan:
     - aggregate:
@@ -97,6 +99,8 @@ jobs:
           PHOTON_PASSWORD: ((photon-password))
           PHOTON_PROJECT: ((photon-project))
           NTP_SERVER: ((ntp-server))
+        inputs:
+        - name: concourse-deploy-bosh
     - task: update-vault
       config:
         platform: linux
@@ -110,6 +114,8 @@ jobs:
           VAULT_ADDR: ((vault-addr))
           VAULT_TOKEN: ((vault-token))
           VAULT_PROPERTIES_PATH: secret/bosh-((deployment-name))-props
+        inputs:
+        - name: concourse-deploy-bosh
 - name: deploy-cloudconfig
   plan:
     - aggregate:
@@ -147,6 +153,8 @@ jobs:
           PCF_DEPLOYMENT_RESERVED: ((pcf-deployment-reserved))
           PCF_DEPLOYMENT_STATIC: ((pcf-deployment-static))
           PCF_DEPLOYMENT_PHOTON_ID: ((pcf-deployment-photon-id))
+        inputs:
+        - name: concourse-deploy-bosh
 - name: update-pcf-pipeline
   plan:
     - aggregate:
@@ -180,6 +188,8 @@ jobs:
           HAPROXY_IP: ((haproxy-ip))
           STEMCELL_CPI_GLOB: ((stemcell-cpi-glob))
           STEMCELL_VERSION: ((stemcell-version))
+        inputs:
+        - name: concourse-deploy-bosh
     - put: pcf-pipeline
       params:
         pipelines:
