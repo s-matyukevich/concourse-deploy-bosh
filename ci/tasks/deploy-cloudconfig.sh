@@ -2,7 +2,7 @@
 
 chmod +x omg-cli/omg-linux
 
-bosh_pass=$(vault read -field=bosh-pass secret/bosh-$DEPLOYMENT_NAME-props || true)
+bosh_pass=$(vault read -field=bosh-pass secret/bosh-$DEPLOYMENT_NAME-props)
 
 pcf_management_dns=""
 for i in $PCF_MANAGEMENT_DNS
@@ -27,7 +27,7 @@ omg-cli/omg-linux register-plugin \
   --pluginpath omg-cli/photon-cloudconfigplugin-linux
 
 omg-cli/omg-linux deploy-cloudconfig \
-  --bosh-url http://$BOSH_IP \
+  --bosh-url https://$BOSH_IP \
   --bosh-port 25555 \
   --bosh-user admin \
   --bosh-pass $bohsh_pass \
