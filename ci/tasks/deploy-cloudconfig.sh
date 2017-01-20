@@ -22,6 +22,10 @@ do
   pcf_deployment_dns+="--network-dns-3 $i "
 done
 
+omg-cli/omg-linux register-plugin \
+  --type cloudconfig \
+  --pluginpath omg-cli/photon-cloudconfigplugin-linux
+
 omg-cli/omg-linux deploy-cloudconfig \
   --bosh-url $BOSH_IP \
   --bosh-port 25555 \
