@@ -15,7 +15,7 @@ resources:
   type: github-release
   check_every: 4h
   source:
-    user: enaml-ops
+    user: s-matyukevich
     repository: omg-cli
 - name: bosh-photon-cpi
   type: github-bosh-release
