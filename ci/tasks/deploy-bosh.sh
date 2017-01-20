@@ -16,11 +16,12 @@ if [ "$bosh_state" ]; then
   echo $bosh_state > omg-bosh-state.json
 fi
 
+OMG_DNS=$PCF_MANAGEMENT_DNS
+
 omg-cli/omg-linux photon \
   --mode uaa \
   --cidr $PCF_MANAGEMENT_CIDR \
   --gateway $PCF_MANAGEMENT_GATEWAY \
-  --dns $PCF_MANAGEMENT_DNS \
   --bosh-private-ip $BOSH_IP \
   --bosh-cpi-release-url "file://bosh-photon-cpi/release.tgz" \
   --bosh-cpi-release-sha $sha1 \
