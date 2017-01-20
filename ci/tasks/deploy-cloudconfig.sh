@@ -27,7 +27,7 @@ omg-cli/omg-linux register-plugin \
   --pluginpath omg-cli/photon-cloudconfigplugin-linux
 
 omg-cli/omg-linux deploy-cloudconfig \
-  --bosh-url $BOSH_IP \
+  --bosh-url https://$BOSH_IP \
   --bosh-port 25555 \
   --bosh-user admin \
   --bosh-pass $bohsh_pass \
