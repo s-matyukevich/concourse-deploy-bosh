@@ -4,5 +4,6 @@
 vault write secret/bosh-$DEPLOYMENT_NAME-props \
   bosh-cacert=@rootCA.pem \
   bosh-pass==@director.pwd \
-  bosh-pass==@nats.pwd
+  nats-pass==@nats.pwd \
+  bosh-state==@omg-bosh-state.json
 

@@ -10,6 +10,12 @@ if [ $nats_pass]; then
   nats="--nats-pwd $nats_pass"
 fi
 
+bosh_state=$(vault read -field=bosh-state secret/bosh-$DEPLOYMENT_NAME-props || true)
+
+if [ "$bosh_state" ]; then
+  echo $bosh_state > omg-bosh-state.json
+fi
+
 omg-cli/omg-linux photon \
   --mode uaa \
   --cidr $PCF_MANAGEMENT_CIDR \
