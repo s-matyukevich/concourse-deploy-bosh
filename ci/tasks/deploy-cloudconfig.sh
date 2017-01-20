@@ -20,7 +20,7 @@ do
   pcf_deployment_dns+="--network-dns-3 $i "
 done
 
-./omg-linux deploy-cloudconfig \
+omg-cli/omg-linux deploy-cloudconfig \
   --bosh-url $BOSH_IP \
   --bosh-port 25555 \
   --bosh-user admin \
