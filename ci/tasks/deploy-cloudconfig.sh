@@ -30,7 +30,7 @@ omg-cli/omg-linux deploy-cloudconfig \
   --bosh-url https://$BOSH_IP \
   --bosh-port 25555 \
   --bosh-user admin \
-  --bosh-pass $bohsh_pass \
+  --bosh-pass $bosh_pass \
   --ssl-ignore \
   photon-cloudconfigplugin-linux \
   --az az1 \
