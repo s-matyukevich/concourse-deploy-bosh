@@ -26,7 +26,7 @@ omg-cli/omg-linux photon \
   --bosh-cpi-release-sha $sha1 \
   --director-name bosh-$DEPLOYMENT_NAME \
   --photon-target $PHOTON_URL \
-  --photon-project-id $PHOTON_PROJECT \
+  --photon-project-id $PHOTON_PROJECT_ID \
   --photon-network-id $PCF_MANAGEMENT_PHOTON_ID \
   --photon-user $PHOTON_USER \
   --photon-password "$PHOTON_PASSWORD" \

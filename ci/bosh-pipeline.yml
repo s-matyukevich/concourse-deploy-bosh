@@ -88,7 +88,7 @@ jobs:
           PHOTON_URL: {{photon-url}}
           PHOTON_USER: {{photon-user}}
           PHOTON_PASSWORD: {{photon-password}}
-          PHOTON_PROJECT: {{photon-project}}
+          PHOTON_PROJECT_ID: {{photon-project-id}}
           NTP_SERVER: {{ntp-server}}
         inputs:
         - name: concourse-deploy-bosh
