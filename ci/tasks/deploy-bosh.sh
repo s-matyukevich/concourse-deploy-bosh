@@ -6,7 +6,7 @@ sha1=$(sha1sum bosh-photon-cpi/release.tgz | awk '{print $1}')
 
 nats_pass=$(vault read -field=nats-pass secret/bosh-$DEPLOYMENT_NAME-props || true)
 
-if [ -n $nats_pass]; then
+if [ $nats_pass]; then
   nats="--nats-pwd $nats_pass"
 fi
 
