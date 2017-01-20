@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+chmod +x omg-cli/omg-linux
+
 bosh_pass=$(vault read -field=bosh-pass secret/bosh-$DEPLOYMENT_NAME-props || true)
 
 pcf_management_dns=""
