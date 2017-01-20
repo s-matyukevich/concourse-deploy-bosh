@@ -1,8 +1,8 @@
-#!/bin/bash 
+#!/bin/bash -e
 
 chmod +x omg-cli/omg-linux
 
-sha1=$(sha1sum bosh-photon-cpi/release.tgz)
+sha1=$(sha1sum bosh-photon-cpi/release.tgz | awk '{print $1}')
 
 nats_pass=$(vault read -field=nats-pass secret/bosh-$DEPLOYMENT_NAME-props || true)
 
@@ -20,11 +20,11 @@ omg-cli/omg-linux photon \
   --bosh-cpi-release-sha $sha1 \
   --director-name bosh-$DEPLOYMENT_NAME \
   --photon-target $PHOTON_URL \
-  --photon-user $PHOTON_USER \
-  --photon-password $PHOTON_PASSWORD \
-  --photon-ignore-cert \
   --photon-project-id $PHOTON_PROJECT \
   --photon-network-id $PCF_MANAGEMENT_PHOTON_ID \
+  --photon-user $PHOTON_USER \
+  --photon-password "$PHOTON_PASSWORD" \
   --ntp-server $NTP_SERVER \
+  --photon-ignore-cert \
   $nats
 
