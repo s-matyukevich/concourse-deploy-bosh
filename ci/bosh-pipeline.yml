@@ -153,7 +153,7 @@ jobs:
           DEPLOYMENT_NAME: {{deployment-name}}
           PRODUCT_SLUG: {{product-slug}}
           PRODUCT_VERSION: {{product-version}}
-          PRODUCT_PLUGIN: {{product-version}}
+          PRODUCT_PLUGIN: {{product-plugin}}
           PIVNET_API_TOKEN: {{pivnet-api-token}}
           SKIP_HAPROXY: {{skip-haproxy}}
           HAPROXY_IP: {{haproxy-ip}}
