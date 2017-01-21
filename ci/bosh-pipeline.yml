@@ -27,7 +27,7 @@ resources:
   type: concourse-pipeline
   source:
     target: {{concourse-url}}
-    insecure: true
+    insecure: "true"
     teams:
     - name: main
       username: {{concourse-user}}
