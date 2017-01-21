@@ -52,7 +52,7 @@ vault-hash-keycert: secret/cf-$DEPLOYMENT_NAME-keycert
 vault-hash-misc: secret/cf-$DEPLOYMENT_NAME-props
 vault-hash-password: secret/cf-$DEPLOYMENT_NAME-password
 vault-token: $VAULT_TOKEN
-vault-json-string:
+vault-json-string: |
   {
     "allow-app-ssh-access": "true",
     "system-domain": "$SYSTEM_DOMAIN",
