@@ -24,7 +24,8 @@ get_ips(){
 bosh_pass=$(vault read -field=bosh-pass secret/bosh-$DEPLOYMENT_NAME-props)
 bosh_cacert=$(vault read -field=bosh-cacert secret/bosh-$DEPLOYMENT_NAME-props)
 
-cat > pcf-pipeline-vars.yml <<EOF
+mkdir concourse
+cat > concourse/pcf-pipeline-vars.yml <<EOF
 bosh-cacert: |
   $bosh_cacert
 bosh-client-id: director

@@ -177,7 +177,7 @@ jobs:
         inputs:
         - name: concourse-deploy-bosh
         outputs:
-        - name: pcf-pipeline-vars.yml
+        - name: concourse
     - put: pcf-pipeline
       params:
         pipelines:
@@ -185,7 +185,7 @@ jobs:
           team: main
           config_file: concourse-deploy-cloudfoundry/pcf-pipeline.yml
           vars_files:
-          - pcf-pipeline-vars.yml
+          - concourse/pcf-pipeline-vars.yml
       
 
       
