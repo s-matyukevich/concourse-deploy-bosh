@@ -4,7 +4,7 @@ all_ips=$(prips $(echo "$PCF_DEPLOYMENT_STATIC" | sed 's/-/ /'))
 IFS=$'\n'
 all_ips=($all_ips)
 delete=($HAPROXY_IP)
-array=( "${all_ips[@]/$delete}" )
+all_ips=( "${all_ips[@]/$delete}" )
 
 
 get_ips(){
