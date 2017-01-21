@@ -166,6 +166,7 @@ jobs:
           PIVNET_API_TOKEN: {{pivnet-api-token}}
           SKIP_HAPROXY: {{skip-haproxy}}
           HAPROXY_IP: {{haproxy-ip}}
+          PCF_DEPLOYMENT_STATIC: {{pcf-deployment-static}}
           STEMCELL_CPI_GLOB: {{stemcell-cpi-glob}}
           STEMCELL_VERSION: {{stemcell-version}}
         inputs:
