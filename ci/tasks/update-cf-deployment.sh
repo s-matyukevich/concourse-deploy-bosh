@@ -101,5 +101,5 @@ vault-json-string: |
   }
 EOF
 
-fly -t cp login -c $CONCOURSE_URL-u $CONCOURSE_USER -p $CONCOURSE_PASSWORD
+fly -t cp login -c $CONCOURSE_URL -u $CONCOURSE_USER -p $CONCOURSE_PASSWORD
 fly -t cp set-pipeline -p deploy-cf-$DEPLOYMENT_NAME  -c concourse-deploy-cloudfoundry/ci/pcf-pipeline.yml -l pcf-pipeline-vars.yml
