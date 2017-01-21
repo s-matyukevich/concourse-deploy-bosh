@@ -4,20 +4,23 @@ all_ips=$(prips $(echo "$PCF_DEPLOYMENT_STATIC" | sed 's/-/ /'))
 IFS=$'\n'
 all_ips=($all_ips)
 
+
 index=0
 get_ips(){
   res=""
   for ((i = 0; i < $1; i++))
   do
-    if ["$all_ips[$index]" -ne "$HAPROXY_IP"]
+    if [ "${all_ips[$index]}" != "$HAPROXY_IP" ]
     then
-      res="$res,$all_ips[$index]"
+      res="$res,${all_ips[$index]}"
+    else
       i=$((i - 1))
     fi
     index=$((index + 1))
   done
-  echo "$res"
+  echo "$res" | cut -c 2-
 }
+
 
 cat > deployment-props.json <<EOF
 {
@@ -30,38 +33,38 @@ cat > deployment-props.json <<EOF
   "cc-vm-type": "large",
   "cc-worker-vm-type": "large",
   "clock-global-vm-type": "large",
-  "consul-ip": "$(get_ips(3))",
+  "consul-ip": "$(get_ips 3)",
   "consul-vm-type": "large",
   "diego-brain-disk-type": "51200",
-  "diego-brain-ip": "$(get_ips(3))",
+  "diego-brain-ip": "$(get_ips 3)",
   "diego-brain-vm-type": "large",
   "diego-cell-disk-type": "51200",
-  "diego-cell-ip": "$(get_ips(7))",
+  "diego-cell-ip": "$(get_ips 7)",
   "diego-cell-vm-type": "large",
-  "diego-db-ip": "$(get_ips(3))",
+  "diego-db-ip": "$(get_ips 3)",
   "diego-db-vm-type": "large",
   "deployment-name": "cf-nonprod",
-  "doppler-ip": "$(get_ips(3))",
+  "doppler-ip": "$(get_ips 3)",
   "doppler-vm-type": "large",
   "errand-vm-type": "large",
-  "etcd-machine-ip": "$(get_ips(3))",
+  "etcd-machine-ip": "$(get_ips 3)",
   "etcd-vm-type": "large",
   "haproxy-vm-type": "large",
   "haproxy-ip": "$HAPROXY_IP",
   "loggregator-traffic-controller-ip": "",
   "loggregator-traffic-controller-vmtype": "large",
   "mysql-disk-type": "51200",
-  "mysql-ip": "$(get_ips(3))",
-  "mysql-proxy-ip": "$(get_ips(3))",
+  "mysql-ip": "$(get_ips 3)",
+  "mysql-proxy-ip": "$(get_ips 3)",
   "mysql-proxy-vm-type": "large",
   "mysql-vm-type": "large",
-  "nats-machine-ip": "$(get_ips(3))",
+  "nats-machine-ip": "$(get_ips 3)",
   "nats-vm-type": "large",
   "nfs-allow-from-network-cidr": "",
   "nfs-disk-type": "51200",
-  "nfs-ip": "$(get_ips(3))",
+  "nfs-ip": "$(get_ips 3)",
   "nfs-vm-type": "large",
-  "router-ip": "$(get_ips(3))",
+  "router-ip": "$(get_ips 3)",
   "router-vm-type": "large",
   "uaa-vm-type": "large",
   "syslog-address": "$SYSLOG_ADDRESS"
