@@ -11,7 +11,7 @@ get_ips(){
   res=""
   for ((i = $1; i <= $2; i++))
   do
-    res="$res,${all_ips[$index]}"
+    res="$res,${all_ips[$i]}"
   done
   echo "$res" | cut -c 2-
 }
