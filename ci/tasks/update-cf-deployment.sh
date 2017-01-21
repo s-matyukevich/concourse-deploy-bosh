@@ -1,8 +1,10 @@
 #!/bin/bash -e
 
 all_ips=$(prips $(echo "$PCF_DEPLOYMENT_STATIC" | sed 's/-/ /'))
+OLD_IFS=$IFS
 IFS=$'\n'
 all_ips=($all_ips)
+IFS=$OLD_IFS
 delete=($HAPROXY_IP)
 all_ips=( "${all_ips[@]/$delete}" )
 
