@@ -24,7 +24,7 @@ get_ips(){
 bosh_pass=$(vault read -field=bosh-pass secret/bosh-$DEPLOYMENT_NAME-props)
 bosh_cacert=$(vault read -field=bosh-cacert secret/bosh-$DEPLOYMENT_NAME-props)
 
-cat > concourse/pcf-pipeline-vars.yml <<EOF
+cat > pcf-pipeline-vars.yml <<EOF
 bosh-cacert: |
   $bosh_cacert
 bosh-client-id: director
@@ -100,3 +100,6 @@ vault-json-string: |
     "syslog-address": "$SYSLOG_ADDRESS"
   }
 EOF
+
+fly -t cp login -u $CONCOURSE_USER -p $CONCOURSE_PASSWORD
+fly -t cp set-pipeline -p deploy-cf-$DEPLOYMENT_NAME  -c concourse-deploy-cloudfoundry/ci/pcf-pipeline.yml -l pcf-pipeline-vars.yml

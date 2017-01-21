@@ -23,22 +23,8 @@ resources:
   source:
     user: s-matyukevich
     repository: bosh-photon-cpi-release
-- name: pcf-pipeline
-  type: concourse-pipeline
-  source:
-    target: {{concourse-url}}
-    insecure: "true"
-    teams:
-    - name: main
-      username: {{concourse-user}}
-      password: {{concourse-password}}
 
 resource_types:
-- name: concourse-pipeline
-  type: docker-image
-  source:
-    repository: smatyukevich/concourse-pipeline-resource
-    tag: latest
 - name: github-bosh-release
   type: docker-image
   source:
@@ -144,15 +130,15 @@ jobs:
     - aggregate:
       - get: concourse-deploy-cloudfoundry
       - get: concourse-deploy-bosh
-    - task: generate-cf-deployment-properties
+    - task: update-cf-deployment
       config:
         platform: linux
         image_resource:
           type: docker-image
           source:
-            repository: virtmerlin/deploy-worker
+            repository: smatyukevich/deploy-worker
         run:
-          path: concourse-deploy-bosh/ci/tasks/generate-cf-deployment-properties.sh
+          path: concourse-deploy-bosh/ci/tasks/update-cf-deployment.sh
         params:
           SYSTEM_DOMAIN: {{system-domain}}
           APP_DOMAIN: {{app-domain}}
@@ -176,17 +162,7 @@ jobs:
           STEMCELL_VERSION: {{stemcell-version}}
         inputs:
         - name: concourse-deploy-bosh
-        outputs:
-        - name: concourse
-    - put: pcf-pipeline
-      params:
-        pipelines:
-        - name: deploy-cf-{{deployment-name}}
-          team: main
-          config_file: concourse-deploy-cloudfoundry/pcf-pipeline.yml
-          vars_files:
-          - concourse/pcf-pipeline-vars.yml
-      
+        - name: concourse-deploy-cloudfoundry
 
       
 
