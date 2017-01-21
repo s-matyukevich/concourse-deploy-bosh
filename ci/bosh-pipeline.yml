@@ -34,6 +34,11 @@ resources:
       password: {{concourse-password}}
 
 resource_types:
+- name: concourse-pipeline
+  type: docker-image
+  source:
+    repository: robdimsdale/concourse-pipeline-resource
+    tag: latest-final
 - name: github-bosh-release
   type: docker-image
   source:
@@ -171,6 +176,8 @@ jobs:
           STEMCELL_VERSION: {{stemcell-version}}
         inputs:
         - name: concourse-deploy-bosh
+        outputs:
+        - name: pcf-pipeline-vars.yml
     - put: pcf-pipeline
       params:
         pipelines:
@@ -178,7 +185,7 @@ jobs:
           team: main
           config_file: concourse-deploy-cloudfoundry/pcf-pipeline.yml
           vars_files:
-          - pcf-deployment-properties.yml
+          - pcf-pipeline-vars.yml
       
 
       
