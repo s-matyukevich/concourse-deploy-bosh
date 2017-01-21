@@ -1,19 +1,23 @@
 #!/bin/bash -e
 
+
 all_ips=$(prips $(echo "$PCF_DEPLOYMENT_STATIC" | sed 's/-/ /'))
 OLD_IFS=$IFS
 IFS=$'\n'
 all_ips=($all_ips)
 IFS=$OLD_IFS
-delete=($HAPROXY_IP)
-all_ips=( "${all_ips[@]/$delete}" )
+new_ips=()
+for value in "${all_ips[@]}"
+do
+    [[ $value != $HAPROXY_IP ]] && new_ips+=($value)
+done
 
 
 get_ips(){
   res=""
   for ((i = $1; i <= $2; i++))
   do
-    res="$res,${all_ips[$i]}"
+    res="$res,${new_ips[$i]}"
   done
   echo "$res" | cut -c 2-
 }
