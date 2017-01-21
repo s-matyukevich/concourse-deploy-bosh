@@ -26,7 +26,7 @@ bosh_cacert=$(vault read -field=bosh-cacert secret/bosh-$DEPLOYMENT_NAME-props)
 
 cat > pcf-pipeline-vars.yml <<EOF
 bosh-cacert: |
-  $bosh_cacert
+$(echo "$bosh_cacert" | sed 's/^/  /')
 bosh-client-id: director
 bosh-client-secret: $bosh_pass
 bosh-pass: $bosh_pass
@@ -102,4 +102,4 @@ vault-json-string: |
 EOF
 
 fly -t cp login -c $CONCOURSE_URL -u $CONCOURSE_USER -p $CONCOURSE_PASSWORD
-fly -t cp set-pipeline -p deploy-cf-$DEPLOYMENT_NAME  -c concourse-deploy-cloudfoundry/ci/pcf-pipeline.yml -l pcf-pipeline-vars.yml
+fly -t cp set-pipeline -n  -p deploy-cf-$DEPLOYMENT_NAME  -c concourse-deploy-cloudfoundry/ci/pcf-pipeline.yml -l pcf-pipeline-vars.yml
