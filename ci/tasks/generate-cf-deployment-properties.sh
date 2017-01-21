@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-all_ips=$(prips $(echo "$PCF_DEPLOYMENT_STATIC" | sed 's/,/ /'))
+all_ips=$(prips $(echo "$PCF_DEPLOYMENT_STATIC" | sed 's/-/ /'))
 IFS=$'\n'
 all_ips=($all_ips)
 
