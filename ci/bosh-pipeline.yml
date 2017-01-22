@@ -160,6 +160,7 @@ jobs:
           PCF_DEPLOYMENT_STATIC: {{pcf-deployment-static}}
           STEMCELL_CPI_GLOB: {{stemcell-cpi-glob}}
           STEMCELL_VERSION: {{stemcell-version}}
+          PCF_DEPLOYMENT_CIDR: {{pcf-deployment-cidr}}
         inputs:
         - name: concourse-deploy-bosh
         - name: concourse-deploy-cloudfoundry
