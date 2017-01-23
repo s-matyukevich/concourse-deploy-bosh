@@ -73,7 +73,7 @@ vault-json-string: |
     "diego-cell-vm-type": "large",
     "diego-db-ip": "$(get_ips 13 15)",
     "diego-db-vm-type": "large",
-    "deployment-name": "cf-nonprod",
+    "deployment-name": "$DEPLOYMENT_NAME",
     "doppler-ip": "$(get_ips 16 18)",
     "doppler-vm-type": "large",
     "errand-vm-type": "large",
