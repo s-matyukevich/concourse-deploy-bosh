@@ -53,10 +53,9 @@ vault-hash-keycert: secret/cf-$DEPLOYMENT_NAME-keycert
 vault-hash-misc: secret/cf-$DEPLOYMENT_NAME-props
 vault-hash-password: secret/cf-$DEPLOYMENT_NAME-password
 vault-token: $VAULT_TOKEN
+uaa-ldap-password: $UAA_LDAP_PASSWORD
 vault-json-string: |
   {
-    "allow-app-ssh-access": "true",
-    "system-domain": "$SYSTEM_DOMAIN",
     "app-domain": "$APP_DOMAIN",
     "bosh-port": "25555",
     "bosh-url": "https://$BOSH_IP",
@@ -82,6 +81,7 @@ vault-json-string: |
     "etcd-vm-type": "large",
     "haproxy-vm-type": "large",
     "haproxy-ip": "$HAPROXY_IP",
+    "skip-haproxy": "false",
     "loggregator-traffic-controller-ip": "$(get_ips 22 24)",
     "loggregator-traffic-controller-vmtype": "large",
     "mysql-disk-type": "51200",
@@ -97,8 +97,15 @@ vault-json-string: |
     "nfs-vm-type": "large",
     "router-ip": "$(get_ips 37 39)",
     "router-vm-type": "large",
+    "system-domain": "$SYSTEM_DOMAIN",
     "uaa-vm-type": "large",
-    "syslog-address": "$SYSLOG_ADDRESS"
+    "uaa-ldap-enabled": "true",
+    "uaa-ldap-url": "$UAA_LDAP_URL",
+    "uaa-ldap-user-dn": "$UAA_LDAP_USER_DN",
+    "uaa-ldap-search-base": "$UAA_LDAP_SEARCH_BASE",
+    "uaa-ldap-search-filter": "$UAA_LDAP_SEARCH_FILTER",
+    "uaa-ldap-mail-attributename": "$UAA_LADP_MAIL_ATTRIBUTENAME",
+    "allow-app-ssh-access": "true"
   }
 EOF
 

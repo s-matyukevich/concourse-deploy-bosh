@@ -9,7 +9,7 @@ resources:
   type: git
   check_every: 4h
   source:
-    uri: https://github.com/enaml-ops/concourse-deploy-cloudfoundry
+    uri: https://github.com/s-matyukevich/concourse-deploy-cloudfoundry
     branch: master
 - name: omg-cli
   type: github-release
@@ -161,6 +161,12 @@ jobs:
           STEMCELL_CPI_GLOB: {{stemcell-cpi-glob}}
           STEMCELL_VERSION: {{stemcell-version}}
           PCF_DEPLOYMENT_CIDR: {{pcf-deployment-cidr}}
+          UAA_LDAP_PASSWORD: {{uaa-ldap-password}}
+          UAA_LDAP_URL: {{uaa-ldap-url}}
+          UAA_LDAP_USER_DN: {{uaa-ldap-user-dn}}
+          UAA_LDAP_SEARCH_BASE: {{uaa-ldap-search-base}}
+          UAA_LDAP_SEARCH_FILTER: {{uaa-ldap-search-filter}}
+          UAA_LADP_MAIL_ATTRIBUTENAME: {{uaa-ldap-mail-attributename}}
         inputs:
         - name: concourse-deploy-bosh
         - name: concourse-deploy-cloudfoundry
