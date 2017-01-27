@@ -16,10 +16,17 @@ if [ "$bosh_state" ]; then
   echo $bosh_state > omg-bosh-state.json
 fi
 
-OMG_DNS=$PCF_MANAGEMENT_DNS
+
+DNS_LIST=$(echo $PCF_MANAGEMENT_DNS | sed 's/\,/\n/g')
+
+DNS_PARAMS=""
+while read -r dns_ip; do
+    DNS_PARAMS="$DNS_PARAMS --dns $dns_ip"
+done <<< "$DNS_LIST"
 
 omg-cli/omg-linux photon \
   --mode uaa \
+  $DNS_PARAMS \
   --cidr $PCF_MANAGEMENT_CIDR \
   --gateway $PCF_MANAGEMENT_GATEWAY \
   --bosh-private-ip $BOSH_IP \
@@ -34,6 +41,7 @@ omg-cli/omg-linux photon \
   --ntp-server $NTP_SERVER \
   --photon-ignore-cert \
   $nats
+
 
 vault write secret/bosh-$DEPLOYMENT_NAME-props \
   bosh-cacert=@rootCA.pem \
