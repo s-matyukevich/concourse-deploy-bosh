@@ -16,17 +16,11 @@ if [ "$bosh_state" ]; then
   echo $bosh_state > omg-bosh-state.json
 fi
 
-
-DNS_LIST=$(echo $PCF_MANAGEMENT_DNS | sed 's/\,/\n/g')
-
-DNS_PARAMS=""
-while read -r dns_ip; do
-    DNS_PARAMS="$DNS_PARAMS --dns $dns_ip"
-done <<< "$DNS_LIST"
+DNS=$PCF_MANAGEMENT_DNS
 
 omg-cli/omg-linux photon \
   --mode uaa \
-  $DNS_PARAMS \
+  $DNS \
   --cidr $PCF_MANAGEMENT_CIDR \
   --gateway $PCF_MANAGEMENT_GATEWAY \
   --bosh-private-ip $BOSH_IP \
