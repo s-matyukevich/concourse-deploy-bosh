@@ -16,7 +16,7 @@ if [ "$bosh_state" ]; then
   echo $bosh_state > omg-bosh-state.json
 fi
 
-DNS=$PCF_MANAGEMENT_DNS
+export DNS=$PCF_MANAGEMENT_DNS
 
 omg-cli/omg-linux photon \
   --mode uaa \
