@@ -20,7 +20,6 @@ export DNS=$PCF_MANAGEMENT_DNS
 
 omg-cli/omg-linux photon \
   --mode uaa \
-  $DNS \
   --cidr $PCF_MANAGEMENT_CIDR \
   --gateway $PCF_MANAGEMENT_GATEWAY \
   --bosh-private-ip $BOSH_IP \
