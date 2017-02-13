@@ -35,8 +35,8 @@ cmd='omg-cli/omg-linux photon \
   --photon-ignore-cert \
   $nats' 
 
-eval `$cmd --print-manifest > manifest.yml`
-eval `$cmd`
+eval "$cmd --print-manifest > manifest.yml"
+eval "$cmd"
 
 
 vault write secret/bosh-$DEPLOYMENT_NAME-props \
