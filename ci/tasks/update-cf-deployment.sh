@@ -12,13 +12,16 @@ do
     [[ $value != $HAPROXY_IP ]] && new_ips+=($value)
 done
 
-
+echo "0" > index
 get_ips(){
+  index=$(cat index)
   res=""
-  for ((i = $1; i <= $2; i++))
+  new_index=$(($index + $1))
+  for ((i = $index; i < $new_index; i++))
   do
     res="$res,${new_ips[$i]}"
   done
+  echo "$new_index" > index
   echo "$res" | cut -c 2-
 }
 
@@ -63,39 +66,39 @@ vault-json-string: |
     "cc-vm-type": "large.memory",
     "cc-worker-vm-type": "large.memory",
     "clock-global-vm-type": "large.memory",
-    "consul-ip": "$(get_ips 0 2)",
+    "consul-ip": "$(get_ips 3)",
     "consul-vm-type": "large.memory",
     "diego-brain-disk-type": "large",
-    "diego-brain-ip": "$(get_ips 3 5)",
+    "diego-brain-ip": "$(get_ips 3)",
     "diego-brain-vm-type": "large.memory",
     "diego-cell-disk-type": "large",
-    "diego-cell-ip": "$(get_ips 6 12)",
+    "diego-cell-ip": "$(get_ips 7)",
     "diego-cell-vm-type": "large.memory",
-    "diego-db-ip": "$(get_ips 13 15)",
+    "diego-db-ip": "$(get_ips 3)",
     "diego-db-vm-type": "large.memory",
     "deployment-name": "cf-$DEPLOYMENT_NAME",
-    "doppler-ip": "$(get_ips 16 18)",
+    "doppler-ip": "$(get_ips 3)",
     "doppler-vm-type": "large.memory",
     "errand-vm-type": "large.memory",
-    "etcd-machine-ip": "$(get_ips 19 21)",
+    "etcd-machine-ip": "$(get_ips 3)",
     "etcd-vm-type": "large.memory",
     "haproxy-vm-type": "large.memory",
     "haproxy-ip": "$HAPROXY_IP",
     "skip-haproxy": "false",
-    "loggregator-traffic-controller-ip": "$(get_ips 22 24)",
+    "loggregator-traffic-controller-ip": "$(get_ips 3)",
     "loggregator-traffic-controller-vmtype": "large.memory",
     "mysql-disk-type": "large",
-    "mysql-ip": "$(get_ips 25 27)",
-    "mysql-proxy-ip": "$(get_ips 28 30)",
+    "mysql-ip": "$(get_ips 3)",
+    "mysql-proxy-ip": "$(get_ips 3)",
     "mysql-proxy-vm-type": "large.memory",
     "mysql-vm-type": "large.memory",
-    "nats-machine-ip": "$(get_ips 31 33)",
+    "nats-machine-ip": "$(get_ips 3)",
     "nats-vm-type": "large.memory",
     "nfs-allow-from-network-cidr": "$PCF_DEPLOYMENT_CIDR",
     "nfs-disk-type": "large",
-    "nfs-ip": "$(get_ips 34 34)",
+    "nfs-ip": "$(get_ips 1)",
     "nfs-vm-type": "large.memory",
-    "router-ip": "$(get_ips 35 37)",
+    "router-ip": "$(get_ips 3)",
     "router-vm-type": "large.memory",
     "system-domain": "$SYSTEM_DOMAIN",
     "uaa-vm-type": "large.memory",
