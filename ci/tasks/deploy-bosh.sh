@@ -18,7 +18,7 @@ fi
 
 export DNS=$PCF_MANAGEMENT_DNS
 
-omg-cli/omg-linux photon \
+cmd='omg-cli/omg-linux photon \
   --mode uaa \
   --cidr $PCF_MANAGEMENT_CIDR \
   --gateway $PCF_MANAGEMENT_GATEWAY \
@@ -33,12 +33,16 @@ omg-cli/omg-linux photon \
   --photon-password "$PHOTON_PASSWORD" \
   --ntp-server $NTP_SERVER \
   --photon-ignore-cert \
-  $nats
+  $nats' 
+
+eval `$cmd --print-manifest > manifest.yml`
+eval `$cmd`
 
 
 vault write secret/bosh-$DEPLOYMENT_NAME-props \
   bosh-cacert=@rootCA.pem \
   bosh-pass=@director.pwd \
   nats-pass=@nats.pwd \
-  bosh-state=@omg-bosh-state.json
+  bosh-state=@omg-bosh-state.json \
+  bosh-manifest=@manifest.yml
 
