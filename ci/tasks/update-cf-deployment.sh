@@ -63,6 +63,8 @@ vault-json-string: |
     "bosh-port": "25555",
     "bosh-url": "https://$BOSH_IP",
     "bosh-user": "admin",
+    "router-ip": "$(get_ips 4)", #gorouter should be on top, as the first 4 ips are reserved for the gorouter
+    "router-vm-type": "large.memory",
     "cc-vm-type": "large.memory",
     "cc-worker-vm-type": "large.memory",
     "clock-global-vm-type": "large.memory",
@@ -98,8 +100,6 @@ vault-json-string: |
     "nfs-disk-type": "large",
     "nfs-ip": "$(get_ips 1)",
     "nfs-vm-type": "large.memory",
-    "router-ip": "$(get_ips 3)",
-    "router-vm-type": "large.memory",
     "system-domain": "$SYSTEM_DOMAIN",
     "uaa-vm-type": "large.memory",
     "uaa-ldap-enabled": "true",
