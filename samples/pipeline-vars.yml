@@ -1,3 +1,7 @@
+git-private-key:
+deploy-bosh-git-url:
+deploy-cloudfoundry-git-url:
+
 deployment-name:  
 
 concourse-url: 
