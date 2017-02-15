@@ -63,7 +63,7 @@ vault-json-string: |
     "bosh-port": "25555",
     "bosh-url": "https://$BOSH_IP",
     "bosh-user": "admin",
-    "router-ip": "$(get_ips 4)", #gorouter should be on top, as the first 4 ips are reserved for the gorouter
+    "router-ip": "$(get_ips 4)", 
     "router-vm-type": "large.memory",
     "cc-vm-type": "large.memory",
     "cc-worker-vm-type": "large.memory",
