@@ -46,8 +46,8 @@ vault write secret/bosh-$DEPLOYMENT_NAME-props \
   bosh-state=@omg-bosh-state.json \
   bosh-port=25555 \
   bosh-client-id=director \
-  bosh-client-secret=@director.pwd
-  bosh-url=https://$BOSH_IP \
+  bosh-client-secret=@director.pwd \
+  bosh-url="https://$BOSH_IP" \
   bosh-user=director \
   bosh-manifest=@manifest.yml
 
