@@ -170,6 +170,7 @@ jobs:
           UAA_LDAP_SEARCH_FILTER: {{uaa-ldap-search-filter}}
           UAA_LADP_MAIL_ATTRIBUTENAME: {{uaa-ldap-mail-attributename}}
           DEPLOY_CLOUDFOUNDRY_GIT_URL: {{deploy-cloudfoundry-git-url}}
+          GIT_PRIVATE_KEY: {{git-private-key}}
         inputs:
         - name: concourse-deploy-bosh
         - name: concourse-deploy-cloudfoundry
