@@ -43,7 +43,7 @@ jobs:
         image_resource:
           type: docker-image
           source:
-            repository: virtmerlin/deploy-worker
+            repository: smatyukevich/bosh-worker
         run:
           path: concourse-deploy-bosh/ci/tasks/create-flavors.sh
         params:
@@ -66,7 +66,7 @@ jobs:
         image_resource:
           type: docker-image
           source:
-            repository: virtmerlin/deploy-worker
+            repository: smatyukevich/bosh-worker
         run:
           path: concourse-deploy-bosh/ci/tasks/deploy-bosh.sh
         params:
@@ -98,7 +98,7 @@ jobs:
         image_resource:
           type: docker-image
           source:
-            repository: virtmerlin/deploy-worker
+            repository: smatyukevich/bosh-worker
         run:
           path: concourse-deploy-bosh/ci/tasks/deploy-cloudconfig.sh
         params:
@@ -138,7 +138,7 @@ jobs:
         image_resource:
           type: docker-image
           source:
-            repository: smatyukevich/deploy-worker
+            repository: smatyukevich/bosh-worker
         run:
           path: concourse-deploy-bosh/ci/tasks/update-cf-deployment.sh
         params:
