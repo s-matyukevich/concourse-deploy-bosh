@@ -1,18 +1,41 @@
 resources:
+
 - name: concourse-deploy-bosh
   type: git
-  check_every: 4h
   source:
     uri: {{deploy-bosh-git-url}}
     private_key: {{git-private-key}}
-    branch: master
 - name: concourse-deploy-cloudfoundry
   type: git
-  check_every: 4h
   source:
     uri: {{deploy-cloudfoundry-git-url}}
     private_key: {{git-private-key}}
-    branch: master
+- name: concourse-deploy-redis
+  type: git
+  source:
+    uri: {{deploy-redis-git-url}}
+    private_key: {{git-private-key}}
+- name: concourse-deploy-p-mysql
+  type: git
+  source:
+    uri: {{deploy-p-mysql-git-url}}
+    private_key: {{git-private-key}}
+- name: concourse-deploy-turbulence
+  type: git
+  source:
+    uri: {{deploy-turbulence-git-url}}
+    private_key: {{git-private-key}}
+- name: concourse-deploy-chaos-loris
+  type: git
+  source:
+    uri: {{deploy-chaos-loris-git-url}}
+    private_key: {{git-private-key}}
+- name: concourse-deploy-rabbitmq
+  type: git
+  source:
+    uri: {{deploy-rabbitmq-git-url}}
+    private_key: {{git-private-key}}
+
 - name: omg-cli
   type: github-release
   check_every: 4h
@@ -140,7 +163,7 @@ jobs:
         inputs:
         - name: concourse-deploy-bosh
         - name: omg-cli
-- name: update-pcf-pipeline
+- name: update-pipelines
   plan:
     - aggregate:
       - get: bosh-version
@@ -148,7 +171,12 @@ jobs:
         passed: [deploy-cloudconfig]
       - get: concourse-deploy-cloudfoundry
       - get: concourse-deploy-bosh
-    - task: update-cf-deployment
+      - get: concourse-deploy-redis
+      - get: concourse-deploy-p-mysql
+      - get: concourse-deploy-turbulence
+      - get: concourse-deploy-chaos-loris
+      - get: concourse-deploy-rabbitmq
+    - task: update-pipelines
       config:
         platform: linux
         image_resource:
@@ -156,7 +184,7 @@ jobs:
           source:
             repository: smatyukevich/bosh-worker
         run:
-          path: concourse-deploy-bosh/ci/tasks/update-cf-deployment.sh
+          path: concourse-deploy-bosh/ci/tasks/update-pipelines.sh
         params:
           SYSTEM_DOMAIN: {{system-domain}}
           APP_DOMAIN: {{app-domain}}
@@ -186,10 +214,20 @@ jobs:
           UAA_LDAP_SEARCH_FILTER: {{uaa-ldap-search-filter}}
           UAA_LADP_MAIL_ATTRIBUTENAME: {{uaa-ldap-mail-attributename}}
           DEPLOY_CLOUDFOUNDRY_GIT_URL: {{deploy-cloudfoundry-git-url}}
+          DEPLOY_REDIS_GIT_URL: {{deploy-redis-git-url}}
+          DEPLOY_P_MYSQL_GIT_URL: {{deploy-p-mysql-git-url}}
+          DEPLOY_TURBULENCE_GIT_URL: {{deploy-turbulence-git-url}}
+          DEPLOY_CHAOS_LORIS_GIT_URL: {{deploy-chaos-loris-git-url}}
+          DEPLOY_RABBITMQ_GIT_URL: {{deploy-rabbitmq-git-url}}
           GIT_PRIVATE_KEY: {{git-private-key}}
         inputs:
         - name: concourse-deploy-bosh
         - name: concourse-deploy-cloudfoundry
+        - name: concourse-deploy-redis
+        - name: concourse-deploy-p-mysql
+        - name: concourse-deploy-turbulence
+        - name: concourse-deploy-chaos-loris
+        - name: concourse-deploy-rabbitmq
 
       
 

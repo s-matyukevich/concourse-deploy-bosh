@@ -115,5 +115,27 @@ vault-json-string: |
   }
 EOF
 
-fly -t cp login -c $CONCOURSE_URL -u $CONCOURSE_USER -p $CONCOURSE_PASSWORD
-fly -t cp set-pipeline -n  -p deploy-cf-$DEPLOYMENT_NAME  -c concourse-deploy-cloudfoundry/ci/pcf-pipeline.yml -l pcf-pipeline-vars.yml
+fly -t $DEPLOYMENT_NAME login -c $CONCOURSE_URL -u $CONCOURSE_USER -p $CONCOURSE_PASSWORD
+fly -t $DEPLOYMENT_NAME set-pipeline -n  -p cf -c concourse-deploy-cloudfoundry/ci/pcf-pipeline.yml -l pcf-pipeline-vars.yml
+
+function update_pipeline()
+{
+  product_name=$1
+  pipeline_repo=$2
+  fly -t $DEPLOYMENT_NAME set-pipeline -p $product_name \
+              --config="ci/pipeline.yml" \
+              --var="vault-address=$VAULT_ADDR" \
+              --var="vault-token=$VAULT_TOKEN" \
+              --var="foundation-name=$DEPLOYMENT_NAME" \
+              --var="deployment-name=$product_name" \
+              --var="pipeline-repo=$pipeline_repo" \
+              --var="pipeline-repo-branch=master" \
+              --var="pipeline-repo-private-key=$GIT_PRIVATE_KEY" \
+              --var="product-name=$product_name"
+}
+
+update_pipeline redis $DEPLOY_REDIS_GIT_URL
+update_pipeline p-mysql $DEPLOY_P_MYSQL_GIT_URL
+update_pipeline turbulence $DEPLOY_TURBULENCE_GIT_URL
+update_pipeline chaos-loris $DEPLOY_CHAOS_LORIS_GIT_URL
+update_pipeline rabbitmq $DEPLOY_RABBITMQ_GIT_URL
