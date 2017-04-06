@@ -62,34 +62,9 @@ resource_types:
     repository: meteogroup/concourse-version-resource
 
 jobs:
-- name: create-flavors		
-  plan:		
-    - aggregate:		
-      - get: concourse-deploy-bosh		
-    - task: create-flavors		
-      config:		
-        platform: linux		
-        image_resource:		
-          type: docker-image		
-          source:		
-            repository: smatyukevich/bosh-worker		
-        run:		
-          path: concourse-deploy-bosh/ci/tasks/create-flavors.sh		
-        params:		
-          PHOTON_URL: {{photon-url}}		
-          PHOTON_USER: {{photon-user}}		
-          PHOTON_PASSWORD: {{photon-password}}		
-          PHOTON_TENANT: {{photon-tenant}}		
-          PHOTON_PROJECT: {{photon-project}}		
-        inputs:		
-        - name: concourse-deploy-bosh
-    - put: bosh-version
 - name: deploy-bosh
   plan:
     - aggregate:
-      - get: bosh-version
-        trigger: true
-        passed: [create-flavors]
       - get: concourse-deploy-bosh
       - get: bosh-photon-cpi
       - get: omg-cli
