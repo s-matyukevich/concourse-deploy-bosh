@@ -95,6 +95,7 @@ jobs:
         - name: concourse-deploy-bosh
         - name: bosh-photon-cpi
         - name: omg-cli
+      - put: bosh-version
 - name: deploy-cloudconfig
   plan:
     - aggregate:
