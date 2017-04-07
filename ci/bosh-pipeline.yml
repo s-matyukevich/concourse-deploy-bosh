@@ -35,7 +35,6 @@ resources:
   source:
     uri: {{deploy-rabbitmq-git-url}}
     private_key: {{git-private-key}}
-
 - name: omg-cli
   type: github-release
   source:
@@ -198,7 +197,6 @@ jobs:
         - name: concourse-deploy-bosh
         - name: concourse-deploy-cloudfoundry
         - name: concourse-deploy-redis
-        - name: concourse-deploy-p-mysql
         - name: concourse-deploy-turbulence
         - name: concourse-deploy-chaos-loris
         - name: concourse-deploy-rabbitmq

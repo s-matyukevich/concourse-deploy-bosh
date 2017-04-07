@@ -26,12 +26,19 @@ get_ips(){
 }
 
 bosh_pass=$(vault read -field=bosh-pass secret/bosh-$DEPLOYMENT_NAME-props)
+bosh_client_id=$(vault read -field=bosh-client-id secret/bosh-$DEPLOYMENT_NAME-props)
+bosh_client_secret=$(vault read -field=bosh-client-secret secret/bosh-$DEPLOYMENT_NAME-props)
 bosh_cacert=$(vault read -field=bosh-cacert secret/bosh-$DEPLOYMENT_NAME-props)
 
 cat > pcf-pipeline-vars.yml <<EOF
 git-private-key: |
 $(echo "$GIT_PRIVATE_KEY" | sed 's/^/  /')
 deploy-cloudfoundry-git-url: $DEPLOY_CLOUDFOUNDRY_GIT_URL
+deploy-redis-git-url: $DEPLOY_REDIS_GIT_URL
+deploy-p-mysql-git-url: $DEPLOY_P_MYSQL_GIT_URL
+deploy-turbulence-git-url: $DEPLOY_TURBULENCE_GIT_URL
+deploy-chaos-loris-git-url: $DEPLOY_CHAOS_LORIS_GIT_URL
+deploy-rabbitmq-git-url: $DEPLOY_RABBITMQ_GIT_URL
 bosh-cacert: |
 $(echo "$bosh_cacert" | sed 's/^/  /')
 bosh-client-id: director
@@ -139,4 +146,6 @@ update_pipeline turbulence $DEPLOY_TURBULENCE_GIT_URL
 update_pipeline chaos-loris $DEPLOY_CHAOS_LORIS_GIT_URL
 update_pipeline rabbitmq $DEPLOY_RABBITMQ_GIT_URL
 
-concourse-deploy-p-mysql/setup-pipeline.sh
+CONCOURSE_TARGET=$DEPLOYMENT_NAME BOSH_CLIENT=$bosh_client_id BOSH_CLIENT_SECRET=$bosh_client_secret BOSH_CA_CERT=$bosh_ca_cert concourse-deploy-rabbitmq/setup-pipeline.sh
+
+
