@@ -146,6 +146,6 @@ update_pipeline redis $DEPLOY_REDIS_GIT_URL
 update_pipeline turbulence $DEPLOY_TURBULENCE_GIT_URL
 update_pipeline chaos-loris $DEPLOY_CHAOS_LORIS_GIT_URL
 
-CONCOURSE_URI = $CONCOURSE_URL CONCOURSE_TARGET=$DEPLOYMENT_NAME BOSH_CLIENT=$bosh_client_id BOSH_CLIENT_SECRET=$bosh_client_secret BOSH_CA_CERT=$bosh_ca_cert concourse-deploy-rabbitmq/setup-pipeline.sh
+CONCOURSE_URI=$CONCOURSE_URL CONCOURSE_TARGET=$DEPLOYMENT_NAME BOSH_CLIENT=$bosh_client_id BOSH_CLIENT_SECRET=$bosh_client_secret BOSH_CA_CERT=$bosh_ca_cert concourse-deploy-rabbitmq/setup-pipeline.sh
 
 
