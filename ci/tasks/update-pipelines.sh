@@ -123,8 +123,7 @@ function update_pipeline()
   product_name=$1
   pipeline_repo=$2
   fly -t $DEPLOYMENT_NAME set-pipeline -n -p deploy-$product_name \
-	      -c concourse-deploy-$product_name/ci/pipeline.yml \
-              --config="ci/pipeline.yml" \
+              --config="concourse-deploy-$product_name/ci/pipeline.yml" \
               --var="vault-address=$VAULT_ADDR" \
               --var="vault-token=$VAULT_TOKEN" \
               --var="foundation-name=$DEPLOYMENT_NAME" \
