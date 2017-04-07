@@ -129,6 +129,7 @@ function update_pipeline()
 {
   product_name=$1
   pipeline_repo=$2
+  echo "Updateing pipeline $product_name"
   fly -t $DEPLOYMENT_NAME set-pipeline -n -p deploy-$product_name \
               --config="concourse-deploy-$product_name/ci/pipeline.yml" \
               --var="vault-address=$VAULT_ADDR" \
@@ -144,7 +145,6 @@ function update_pipeline()
 update_pipeline redis $DEPLOY_REDIS_GIT_URL
 update_pipeline turbulence $DEPLOY_TURBULENCE_GIT_URL
 update_pipeline chaos-loris $DEPLOY_CHAOS_LORIS_GIT_URL
-update_pipeline rabbitmq $DEPLOY_RABBITMQ_GIT_URL
 
 CONCOURSE_TARGET=$DEPLOYMENT_NAME BOSH_CLIENT=$bosh_client_id BOSH_CLIENT_SECRET=$bosh_client_secret BOSH_CA_CERT=$bosh_ca_cert concourse-deploy-rabbitmq/setup-pipeline.sh
 
