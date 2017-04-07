@@ -115,14 +115,15 @@ vault-json-string: |
   }
 EOF
 
-fly -t $DEPLOYMENT_NAME login -c $CONCOURSE_URL -u $CONCOURSE_USER -p $CONCOURSE_PASSWORD
-fly -t $DEPLOYMENT_NAME set-pipeline -n  -p cf -c concourse-deploy-cloudfoundry/ci/pcf-pipeline.yml -l pcf-pipeline-vars.yml
+fly -t $DEPLOYMENT_NAME login  -n  $DEPLOYMENT_NAME -c $CONCOURSE_URL -u $CONCOURSE_USER -p $CONCOURSE_PASSWORD
+fly -t $DEPLOYMENT_NAME set-pipeline -n  -p deploy-cf -c concourse-deploy-cloudfoundry/ci/pcf-pipeline.yml -l pcf-pipeline-vars.yml
 
 function update_pipeline()
 {
   product_name=$1
   pipeline_repo=$2
-  fly -t $DEPLOYMENT_NAME set-pipeline -p $product_name \
+  fly -t $DEPLOYMENT_NAME set-pipeline -n -p deploy-$product_name \
+	      -c concourse-deploy-$product_name/ci/pipeline.yml \
               --config="ci/pipeline.yml" \
               --var="vault-address=$VAULT_ADDR" \
               --var="vault-token=$VAULT_TOKEN" \
