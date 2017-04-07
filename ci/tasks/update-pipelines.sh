@@ -135,7 +135,8 @@ function update_pipeline()
 }
 
 update_pipeline redis $DEPLOY_REDIS_GIT_URL
-update_pipeline p-mysql $DEPLOY_P_MYSQL_GIT_URL
 update_pipeline turbulence $DEPLOY_TURBULENCE_GIT_URL
 update_pipeline chaos-loris $DEPLOY_CHAOS_LORIS_GIT_URL
 update_pipeline rabbitmq $DEPLOY_RABBITMQ_GIT_URL
+
+concourse-deploy-p-mysql/setup-pipeline.sh
