@@ -148,7 +148,7 @@ update_pipeline turbulence $DEPLOY_TURBULENCE_GIT_URL
 update_pipeline chaos-loris $DEPLOY_CHAOS_LORIS_GIT_URL
 
 fly -t $DEPLOYMENT_NAME set-pipeline -p deploy-rabbitmq \
-              --config="$DEPLOY_CHAOS_LORIS_GIT_URL/ci/pipeline.yml" \
+              --config="concourse-deployrabbitmq/ci/pipeline.yml" \
               --var="vault-address=$VAULT_ADDR" \
               --var="vault-token=$VAULT_TOKEN" \
               --var="concourse-url=$CONCOURSE_URL" \
