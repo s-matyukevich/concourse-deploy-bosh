@@ -122,6 +122,7 @@ vault-json-string: |
   }
 EOF
 
+
 fly -t $DEPLOYMENT_NAME login  -n  $DEPLOYMENT_NAME -c $CONCOURSE_URL -u $CONCOURSE_USER -p $CONCOURSE_PASSWORD
 fly -t $DEPLOYMENT_NAME set-pipeline -n  -p deploy-cf -c concourse-deploy-cloudfoundry/ci/pcf-pipeline.yml -l pcf-pipeline-vars.yml
 
@@ -129,7 +130,7 @@ function update_pipeline()
 {
   product_name=$1
   pipeline_repo=$2
-  echo "Updateing pipeline $product_name"
+  echo "Updating pipeline $product_name"
   fly -t $DEPLOYMENT_NAME set-pipeline -n -p deploy-$product_name \
               --config="concourse-deploy-$product_name/ci/pipeline.yml" \
               --var="vault-address=$VAULT_ADDR" \
@@ -146,5 +147,29 @@ update_pipeline redis $DEPLOY_REDIS_GIT_URL
 update_pipeline turbulence $DEPLOY_TURBULENCE_GIT_URL
 update_pipeline chaos-loris $DEPLOY_CHAOS_LORIS_GIT_URL
 
-FOUNDATION_NAME=$DEPLOYMENT_NAME PRODUCT_NAME=rabbitmq $CONCOURSE_URI=$CONCOURSE_URL CONCOURSE_TARGET=$DEPLOYMENT_NAME BOSH_CLIENT=$bosh_client_id BOSH_CLIENT_SECRET=$bosh_client_secret BOSH_CA_CERT=$bosh_cacert concourse-deploy-rabbitmq/setup-pipeline.sh
+fly -t $DEPLOYMENT_NAME set-pipeline -p deploy-rabbitmq \
+              --config="$DEPLOY_CHAOS_LORIS_GIT_URL/ci/pipeline.yml" \
+              --var="vault-address=$VAULT_ADDR" \
+              --var="vault-token=$VAULT_TOKEN" \
+              --var="concourse-url=$CONCOURSE_URL" \
+              --var="concourse-user=$CONCOURSE_USER" \
+              --var="concourse-pass=$CONCOURSE_PASSWORD" \
+              --var="deployment-name=rabbitmq" \
+              --var="vault_addr=$VAULT_ADDR" \
+              --var="vault_token=$VAULT_TOKEN" \
+              --var="foundation-name=$DEPLOYMENT_NAME" \
+              --var="pipeline-repo=$DEPLOY_RABBITMQ_GIT_URL" \
+              --var="pipeline-repo-branch=master" \
+              --var="pipeline-repo-private-key=$GIT_PRIVATE_KEY)" \
+              --var="product-name=rabbitmq" \
+              --var="vault_hash_hostvars=secret/rabbitmq-$DEPLOYMENT_NAME-hostvars" \
+              --var="vault_hash_ip=secret/rabbitmq-$DEPLOYMENT_NAME-props" \
+              --var="vault_hash_keycert=secret/rabbitmq-$DEPLOYMENT_NAME-keycert" \
+              --var="vault_hash_misc=secret/rabbitmq-$DEPLOYMENT_NAME-props" \
+              --var="vault_hash_password=secret/rabbitmq-$DEPLOYMENT_NAME-password" \
+              --var="vault_hash_ert_password=secret/cf-$DEPLOYMENT_NAME-password" \
+              --var="vault_hash_ert_ip=secret/cf-$DEPLOYMENT_NAME-props" \
+              --load-vars-from pipeline-defaults.yml \
+              --load-vars-from temp/vault-values.yml 
+
 
