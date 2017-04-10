@@ -147,28 +147,12 @@ update_pipeline redis $DEPLOY_REDIS_GIT_URL
 update_pipeline turbulence $DEPLOY_TURBULENCE_GIT_URL
 update_pipeline chaos-loris $DEPLOY_CHAOS_LORIS_GIT_URL
 
-fly -t $DEPLOYMENT_NAME set-pipeline -p deploy-rabbitmq \
-              --config="concourse-deploy-rabbitmq/ci/pipeline.yml" \
-              --var="vault-address=$VAULT_ADDR" \
-              --var="vault-token=$VAULT_TOKEN" \
-              --var="concourse-url=$CONCOURSE_URL" \
-              --var="concourse-user=$CONCOURSE_USER" \
-              --var="concourse-pass=$CONCOURSE_PASSWORD" \
-              --var="deployment-name=rabbitmq" \
-              --var="vault_addr=$VAULT_ADDR" \
-              --var="vault_token=$VAULT_TOKEN" \
-              --var="foundation-name=$DEPLOYMENT_NAME" \
-              --var="pipeline-repo=$DEPLOY_RABBITMQ_GIT_URL" \
-              --var="pipeline-repo-branch=master" \
-              --var="pipeline-repo-private-key=$GIT_PRIVATE_KEY)" \
-              --var="product-name=rabbitmq" \
-              --var="vault_hash_hostvars=secret/rabbitmq-$DEPLOYMENT_NAME-hostvars" \
-              --var="vault_hash_ip=secret/rabbitmq-$DEPLOYMENT_NAME-props" \
-              --var="vault_hash_keycert=secret/rabbitmq-$DEPLOYMENT_NAME-keycert" \
-              --var="vault_hash_misc=secret/rabbitmq-$DEPLOYMENT_NAME-props" \
-              --var="vault_hash_password=secret/rabbitmq-$DEPLOYMENT_NAME-password" \
-              --var="vault_hash_ert_password=secret/cf-$DEPLOYMENT_NAME-password" \
-              --var="vault_hash_ert_ip=secret/cf-$DEPLOYMENT_NAME-props" \
-              --load-vars-from pipeline-defaults.yml 
-
-
+export CONCOURSE_URI=$CONCOURSE_URL
+export CONCOURSE_TARGET=$DEPLOYMENT_NAME
+export PRODUCT_NAME=rabbitmq
+export FOUNDATION_NAME=$DEPLOYMENT_NAME
+export PIPELINE_REPO=$DEPLOY_RABBITMQ_GIT_URL
+export PIPELINE_REPO_BRANCH=master
+echo $GIT_PRIVATE_KEY > private-key.pem
+export PIPELINE_REPO_PRIVATE_KEY_PATH=private-key.pem
+concourse-deploy-rabbitmq/setup-pipeline.sh
