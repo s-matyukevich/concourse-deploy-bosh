@@ -153,10 +153,11 @@ export PRODUCT_NAME=rabbitmq
 export FOUNDATION_NAME=$DEPLOYMENT_NAME
 export PIPELINE_REPO=$DEPLOY_RABBITMQ_GIT_URL
 export PIPELINE_REPO_BRANCH=master
-echo $GIT_PRIVATE_KEY > private-key.pem
-export PIPELINE_REPO_PRIVATE_KEY_PATH=private-key.pem
+echo $GIT_PRIVATE_KEY > git-private-key.pem
+export PIPELINE_REPO_PRIVATE_KEY_PATH=git-private-key.pem
 export BOSH_CLIENT=$bosh_client_id
 export BOSH_CLIENT_SECRET=$bosh_client_secret
-export BOSH_CA_CERT=$bosh_cacert
+echo $bosh_cacert > bosh-ca-cert.pem
+export BOSH_CA_CERT=bosh-ca-cert.pem
 
 concourse-deploy-rabbitmq/setup-pipeline.sh
