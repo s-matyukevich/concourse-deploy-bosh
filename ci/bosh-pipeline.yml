@@ -2,21 +2,25 @@ resources:
 
 - name: concourse-deploy-bosh
   type: git
+  check_every: 4h
   source:
     uri: {{deploy-bosh-git-url}}
     private_key: {{git-private-key}}
 - name: concourse-deploy-cloudfoundry
   type: git
+  check_every: 4h
   source:
     uri: {{deploy-cloudfoundry-git-url}}
     private_key: {{git-private-key}}
 - name: omg-cli
   type: github-release
+  check_every: 4h
   source:
     user: s-matyukevich
     repository: omg-cli
 - name: bosh-photon-cpi
   type: github-bosh-release
+  check_every: 4h
   source:
     user: s-matyukevich
     repository: bosh-photon-cpi-release
