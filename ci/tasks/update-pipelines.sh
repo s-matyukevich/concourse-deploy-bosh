@@ -169,7 +169,6 @@ fly -t $DEPLOYMENT_NAME set-pipeline -p deploy-rabbitmq \
               --var="vault_hash_password=secret/rabbitmq-$DEPLOYMENT_NAME-password" \
               --var="vault_hash_ert_password=secret/cf-$DEPLOYMENT_NAME-password" \
               --var="vault_hash_ert_ip=secret/cf-$DEPLOYMENT_NAME-props" \
-              --load-vars-from pipeline-defaults.yml \
-              --load-vars-from temp/vault-values.yml 
+              --load-vars-from pipeline-defaults.yml 
 
 
