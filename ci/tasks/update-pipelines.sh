@@ -120,3 +120,6 @@ vault-json-string: |
     "allow-app-ssh-access": "true"
   }
 EOF
+
+fly -t $DEPLOYMENT_NAME login  -n  $DEPLOYMENT_NAME -c $CONCOURSE_URL -u $CONCOURSE_USER -p $CONCOURSE_PASSWORD
+fly -t $DEPLOYMENT_NAME set-pipeline -n  -p deploy-cf -c concourse-deploy-cloudfoundry/ci/pcf-pipeline.yml -l pcf-pipeline-vars.yml
