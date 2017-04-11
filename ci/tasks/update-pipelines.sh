@@ -40,7 +40,7 @@ deploy-chaos-loris-git-url: $DEPLOY_CHAOS_LORIS_GIT_URL
 deploy-rabbitmq-git-url: $DEPLOY_RABBITMQ_GIT_URL
 deploy-bluemedora-git-url: $DEPLOY_BLUEMEDORA_GIT_URL 
 deploy-firehose-to-loginsight-git-url: $DEPLOY_FIREHOSE_TO_LOGINSIGHT_GIT_URL
-deploy-spring-services-git-url: $DEPLOY_SPRING_SERVICES_GIT_URL: 
+deploy-spring-services-git-url: $DEPLOY_SPRING_SERVICES_GIT_URL 
 bosh-cacert: |
 $(echo "$bosh_cacert" | sed 's/^/  /')
 bosh-client-id: director
