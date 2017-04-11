@@ -150,6 +150,7 @@ jobs:
           SKIP_HAPROXY: {{skip-haproxy}}
           HAPROXY_IP: {{haproxy-ip}}
           PCF_DEPLOYMENT_STATIC: {{pcf-deployment-static}}
+          PCF_SERVICES_STATIC: {{pcf-services-static}}
           STEMCELL_CPI_GLOB: {{stemcell-cpi-glob}}
           STEMCELL_VERSION: {{stemcell-version}}
           PCF_DEPLOYMENT_CIDR: {{pcf-deployment-cidr}}
