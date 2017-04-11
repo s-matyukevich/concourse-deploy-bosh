@@ -2,7 +2,7 @@
 
 chmod +x omg-cli/omg-linux
 
-bosh_pass=$(vault read -field=bosh-pass secret/bosh-$DEPLOYMENT_NAME-props)
+bosh_pass=$(vault read -field=bosh-pass secret/bosh-$FOUNDATION_NAME-props)
 
 export NETWORK_DNS_1=$PCF_MANAGEMENT_DNS
 export NETWORK_DNS_2=$PCF_SERVICES_DNS

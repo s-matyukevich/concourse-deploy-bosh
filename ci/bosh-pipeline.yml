@@ -61,7 +61,7 @@ jobs:
           PCF_MANAGEMENT_DNS: {{pcf-management-dns}}
           PCF_MANAGEMENT_PHOTON_ID: {{pcf-management-photon-id}}
           BOSH_IP: {{bosh-ip}}
-          DEPLOYMENT_NAME: {{deployment-name}}
+          FOUNDATION_NAME: {{foundation-name}}
           PHOTON_URL: {{photon-url}}
           PHOTON_USER: {{photon-user}}
           PHOTON_PASSWORD: {{photon-password}}
@@ -92,7 +92,7 @@ jobs:
         params:
           VAULT_ADDR: {{vault-addr}}
           VAULT_TOKEN: {{vault-token}}
-          DEPLOYMENT_NAME: {{deployment-name}}
+          FOUNDATION_NAME: {{foundation-name}}
           BOSH_IP: {{bosh-ip}}
           PCF_MANAGEMENT_CIDR: {{pcf-management-cidr}}
           PCF_MANAGEMENT_GATEWAY: {{pcf-management-gateway}}
@@ -138,12 +138,11 @@ jobs:
           SYSLOG_ADDRESS: {{syslog-address}}
           VAULT_ADDR: {{vault-addr}}
           VAULT_TOKEN: {{vault-token}}
-          DEPLOYMENT_NAME: {{deployment-name}}
+          FOUNDATION_NAME: {{foundation-name}}
           BOSH_IP: {{bosh-ip}}
           CONCOURSE_URL: {{concourse-url}}
           CONCOURSE_USER: {{concourse-user}}
           CONCOURSE_PASSWORD: {{concourse-password}}
-          DEPLOYMENT_NAME: {{deployment-name}}
           PRODUCT_SLUG: {{product-slug}}
           PRODUCT_VERSION: {{product-version}}
           PRODUCT_PLUGIN: {{product-plugin}}

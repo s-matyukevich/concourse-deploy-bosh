@@ -24,10 +24,10 @@ get_ips(){
   echo "$res" | cut -c 2-
 }
 
-bosh_pass=$(vault read -field=bosh-pass secret/bosh-$DEPLOYMENT_NAME-props)
-bosh_client_id=$(vault read -field=bosh-client-id secret/bosh-$DEPLOYMENT_NAME-props)
-bosh_client_secret=$(vault read -field=bosh-client-secret secret/bosh-$DEPLOYMENT_NAME-props)
-bosh_cacert=$(vault read -field=bosh-cacert secret/bosh-$DEPLOYMENT_NAME-props)
+bosh_pass=$(vault read -field=bosh-pass secret/bosh-$FOUNDATION_NAME-props)
+bosh_client_id=$(vault read -field=bosh-client-id secret/bosh-$FOUNDATION_NAME-props)
+bosh_client_secret=$(vault read -field=bosh-client-secret secret/bosh-$FOUNDATION_NAME-props)
+bosh_cacert=$(vault read -field=bosh-cacert secret/bosh-$FOUNDATION_NAME-props)
 
 cat > pcf-pipeline-vars.yml <<EOF
 git-private-key: |
@@ -50,7 +50,8 @@ system-domain: $SYSTEM_DOMAIN
 concourse-url: $CONCOURSE_URL
 concourse-user: $CONCOURSE_USER
 concourse-pass: $CONCOURSE_PASSWORD
-deployment-name: cf-$DEPLOYMENT_NAME
+deployment-name: cf-$FOUNDATION_NAME
+foundation-name: $FOUNDATION_NAME
 product-slug: $PRODUCT_SLUG
 product-version: $PRODUCT_VERSION
 product-plugin: $PRODUCT_PLUGIN
@@ -59,11 +60,11 @@ skip-haproxy: $SKIP_HAPROXY
 stemcell-cpi-glob: '$STEMCELL_CPI_GLOB'
 stemcell-version: $STEMCELL_VERSION
 vault-addr: $VAULT_ADDR
-vault-hash-hostvars: secret/cf-$DEPLOYMENT_NAME-hostvars
-vault-hash-ip: secret/cf-$DEPLOYMENT_NAME-ip
-vault-hash-keycert: secret/cf-$DEPLOYMENT_NAME-keycert
-vault-hash-misc: secret/cf-$DEPLOYMENT_NAME-props
-vault-hash-password: secret/cf-$DEPLOYMENT_NAME-password
+vault-hash-hostvars: secret/cf-$FOUNDATION_NAME-hostvars
+vault-hash-ip: secret/cf-$FOUNDATION_NAME-ip
+vault-hash-keycert: secret/cf-$FOUNDATION_NAME-keycert
+vault-hash-misc: secret/cf-$FOUNDATION_NAME-props
+vault-hash-password: secret/cf-$FOUNDATION_NAME-password
 vault-token: $VAULT_TOKEN
 uaa-ldap-password: $UAA_LDAP_PASSWORD
 vault-json-string: |
@@ -87,7 +88,7 @@ vault-json-string: |
     "diego-cell-vm-type": "large.memory",
     "diego-db-ip": "$(get_ips 3)",
     "diego-db-vm-type": "large.memory",
-    "deployment-name": "cf-$DEPLOYMENT_NAME",
+    "deployment-name": "cf-$FOUNDATION_NAME",
     "doppler-ip": "$(get_ips 3)",
     "doppler-vm-type": "large.memory",
     "errand-vm-type": "large.memory",
@@ -121,5 +122,5 @@ vault-json-string: |
   }
 EOF
 
-fly -t $DEPLOYMENT_NAME login  -n  $DEPLOYMENT_NAME -c $CONCOURSE_URL -u $CONCOURSE_USER -p $CONCOURSE_PASSWORD
-fly -t $DEPLOYMENT_NAME set-pipeline -n  -p deploy-cf -c concourse-deploy-cloudfoundry/ci/pcf-pipeline.yml -l pcf-pipeline-vars.yml
+fly -t $FOUNDATION_NAME login  -n  $FOUNDATION_NAME -c $CONCOURSE_URL -u $CONCOURSE_USER -p $CONCOURSE_PASSWORD
+fly -t $FOUNDATION_NAME set-pipeline -n  -p deploy-cf -c concourse-deploy-cloudfoundry/ci/pcf-pipeline.yml -l pcf-pipeline-vars.yml

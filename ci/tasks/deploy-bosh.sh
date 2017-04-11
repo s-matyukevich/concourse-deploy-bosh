@@ -4,13 +4,13 @@ chmod +x omg-cli/omg-linux
 
 sha1=$(sha1sum bosh-photon-cpi/release.tgz | awk '{print $1}')
 
-nats_pass=$(vault read -field=nats-pass secret/bosh-$DEPLOYMENT_NAME-props || true)
+nats_pass=$(vault read -field=nats-pass secret/bosh-$FOUNDATION_NAME-props || true)
 
 if [ "$nats_pass" ]; then
   nats="--nats-pwd $nats_pass"
 fi
 
-bosh_state=$(vault read -field=bosh-state secret/bosh-$DEPLOYMENT_NAME-props || true)
+bosh_state=$(vault read -field=bosh-state secret/bosh-$FOUNDATION_NAME-props || true)
 
 if [ "$bosh_state" ]; then
   echo $bosh_state > omg-bosh-state.json
@@ -25,7 +25,7 @@ cmd='omg-cli/omg-linux photon \
   --bosh-private-ip $BOSH_IP \
   --bosh-cpi-release-url "file://bosh-photon-cpi/release.tgz" \
   --bosh-cpi-release-sha $sha1 \
-  --director-name bosh-$DEPLOYMENT_NAME \
+  --director-name bosh-$FOUNDATION_NAME \
   --photon-target $PHOTON_URL \
   --photon-project-id $PHOTON_PROJECT_ID \
   --photon-network-id $PCF_MANAGEMENT_PHOTON_ID \
@@ -39,7 +39,7 @@ eval "$cmd --print-manifest > manifest.yml"
 eval "$cmd"
 
 
-vault write secret/bosh-$DEPLOYMENT_NAME-props \
+vault write secret/bosh-$FOUNDATION_NAME-props \
   bosh-cacert=@rootCA.pem \
   bosh-pass=@director.pwd \
   nats-pass=@nats.pwd \
