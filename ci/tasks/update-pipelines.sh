@@ -48,6 +48,7 @@ bosh-client-secret: $bosh_pass
 bosh-pass: $bosh_pass
 bosh-url: https://$BOSH_IP
 bosh-user: admin
+syslog-address: $SYSLOG_ADDRESS
 app-domain: $APP_DOMAIN
 system-domain: $SYSTEM_DOMAIN
 concourse-url: $CONCOURSE_URL
