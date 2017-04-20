@@ -79,7 +79,6 @@ jobs:
         trigger: true
         passed: [deploy-bosh]
       - get: concourse-deploy-bosh
-      - get: omg-cli
     - task: deploy
       config:
         platform: linux
@@ -114,7 +113,6 @@ jobs:
           PCF_DEPLOYMENT_PHOTON_ID: {{pcf-deployment-photon-id}}
         inputs:
         - name: concourse-deploy-bosh
-        - name: omg-cli
 - name: update-pipelines
   plan:
     - aggregate:

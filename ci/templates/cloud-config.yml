@@ -1,0 +1,81 @@
+azs:
+- name: az1 
+vm_types:
+- name: small
+  cloud_properties:
+    disk_flavor: core-200
+    vm_attached_disk_size_gb: 30
+    vm_flavor: core-110
+- name: medium
+  cloud_properties:
+    disk_flavor: core-200
+    vm_attached_disk_size_gb: 50
+    vm_flavor: core-240
+- name: large.memory
+  cloud_properties:
+    disk_flavor: core-200
+    vm_attached_disk_size_gb: 50
+    vm_flavor: core-245
+- name: large.cpu
+  cloud_properties:
+    disk_flavor: core-200
+    vm_attached_disk_size_gb: 30
+    vm_flavor: core-280
+disk_types:
+- name: small
+  disk_size: 3000
+  cloud_properties:
+    disk_flavor: core-200
+- name: medium
+  disk_size: 30000
+  cloud_properties:
+    disk_flavor: core-200
+- name: large
+  disk_size: 50000
+  cloud_properties:
+    disk_flavor: core-200
+- name: xlarge
+  disk_size: 250000
+  cloud_properties:
+    disk_flavor: core-200
+networks:
+- name: pcf-management
+  subnets:
+  - az: az1 
+    cloud_properties: 
+      network_id: ((pcf-management-network))
+    dns: ((pcf-management-dns))
+    gateway: ((pcf-management-gateway))
+    range: ((pcf-management-cidr))
+    reserved: ((pcf-management-reserved))
+    static: ((pcf-management-static))
+  type: manual
+- name: pcf-services
+  subnets:
+  - az: az1 
+    cloud_properties:
+      network_id: ((pcf-services-network))
+    dns: ((pcf-services-dns))
+    gateway: ((pcf-services-gateway))
+    range: ((pcf-services-cidr))
+    reserved: ((pcf-services-reserved))
+    static: ((pcf-services-static))
+  type: manual
+- name: pcf-deployment
+  subnets:
+  - az: az1 
+    cloud_properties:
+      network_id: ((pcf-deployment-network))
+    dns: ((pcf-deployment-dns))
+    gateway: ((pcf-deployment-gateway))
+    range: ((pcf-deployment-cidr))
+    reserved: ((pcf-deployment-reserved))
+    static: ((pcf-deployment-static))
+  type: manual
+compilation:
+  workers: 8
+  network: pcf-management
+  reuse_compilation_vms: true
+  vm_type: medium
+  az: az1
+

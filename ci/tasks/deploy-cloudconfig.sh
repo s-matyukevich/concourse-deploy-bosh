@@ -1,44 +1,28 @@
 #!/bin/bash -e
 
-chmod +x omg-cli/omg-linux
+BOSH_ENVIRONMENT=$(vault read -field=bosh-url secret/bosh-$FOUNDATION_NAME-props)
+BOSH_CLIENT=$(vault read -field=bosh-client-id secret/bosh-$FOUNDATION_NAME-props)
+BOSH_CLIENT_SECRET=$(vault read -field=bosh-client-secret secret/bosh-$FOUNDATION_NAME-props)
+BOSH_CA_CERT=$(vault read -field=bosh-cacert secret/bosh-$FOUNDATION_NAME-props)
 
-bosh_pass=$(vault read -field=bosh-pass secret/bosh-$FOUNDATION_NAME-props)
+bosh interpolate concourse-deploy-bosh/ci/templates/cloud-config.yml \
+  -v pcf-management-network=$PCF_MANAGEMENT_PHOTON_ID \
+  -v pcf-management-dns=$PCF_MANAGEMENT_DNS \
+  -v pcf-management-gateway=$PCF_MANAGEMENT_GATEWAY \
+  -v pcf-management-cidr=$PCF_MANAGEMENT_CIDR \
+  -v pcf-management-reserved=$PCF_MANAGEMENT_RESERVED \
+  -v pcf-management-static=$PCF_MANAGEMENT_STATIC \
+  -v pcf-services-network=$PCF_SERVICES_PHOTON_ID \
+  -v pcf-services-dns=$PCF_SERVICES_DNS \
+  -v pcf-services-gateway=$PCF_SERVICES_GATEWAY \
+  -v pcf-services-cidr=$PCF_SERVICES_CIDR \
+  -v pcf-services-reserved=$PCF_SERVICES_RESERVED \
+  -v pcf-services-static=$PCF_SERVICES_STATIC \
+  -v pcf-deployment-network=$PCF_DEPLOYMENT_PHOTON_ID \
+  -v pcf-deployment-dns=$PCF_DEPLOYMENT_DNS \
+  -v pcf-deployment-gateway=$PCF_DEPLOYMENT_GATEWAY \
+  -v pcf-deployment-cidr=$PCF_DEPLOYMENT_CIDR \
+  -v pcf-deployment-reserved=$PCF_DEPLOYMENT_RESERVED \
+  -v pcf-deployment-static=$PCF_DEPLOYMENT_STATIC  > cc.yml
 
-export NETWORK_DNS_1=$PCF_MANAGEMENT_DNS
-export NETWORK_DNS_2=$PCF_SERVICES_DNS
-export NETWORK_DNS_3=$PCF_DEPLOYMENT_DNS
-
-export NETWORK_RESERVED_1=$PCF_MANAGEMENT_RESERVED
-export NETWORK_RESERVED_2=$PCF_SERVICES_RESERVED
-export NETWORK_RESERVED_3=$PCF_DEPLOYMENT_RESERVED
-
-omg-cli/omg-linux register-plugin \
-  --type cloudconfig \
-  --pluginpath omg-cli/photon-cloudconfigplugin-linux
-
-omg-cli/omg-linux deploy-cloudconfig \
-  --bosh-url https://$BOSH_IP \
-  --bosh-port 25555 \
-  --bosh-user admin \
-  --bosh-pass $bosh_pass \
-  --ssl-ignore \
-  photon-cloudconfigplugin-linux \
-  --az az1 \
-  --network-name-1 pcf-management \
-  --network-az-1 az1 \
-  --network-cidr-1 $PCF_MANAGEMENT_CIDR \
-  --network-gateway-1 $PCF_MANAGEMENT_GATEWAY \
-  --network-static-1 $PCF_MANAGEMENT_STATIC \
-  --photon-network-name-1 $PCF_MANAGEMENT_PHOTON_ID \
-  --network-name-2 pcf-services \
-  --network-az-2 az1 \
-  --network-cidr-2 $PCF_SERVICES_CIDR \
-  --network-gateway-2 $PCF_SERVICES_GATEWAY \
-  --network-static-2 $PCF_SERVICES_STATIC \
-  --photon-network-name-2 $PCF_SERVICES_PHOTON_ID \
-  --network-name-3 pcf-deployment \
-  --network-az-3 az1 \
-  --network-cidr-3 $PCF_DEPLOYMENT_CIDR \
-  --network-gateway-3 $PCF_DEPLOYMENT_GATEWAY \
-  --network-static-3 $PCF_DEPLOYMENT_STATIC \
-  --photon-network-name-3 $PCF_DEPLOYMENT_PHOTON_ID 
+bosh -n update-cloud-config cc.yml
