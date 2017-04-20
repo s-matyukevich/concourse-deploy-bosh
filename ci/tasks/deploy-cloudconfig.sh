@@ -1,9 +1,9 @@
 #!/bin/bash -e
 
-BOSH_ENVIRONMENT=$(vault read -field=bosh-url secret/bosh-$FOUNDATION_NAME-props)
-BOSH_CLIENT=$(vault read -field=bosh-client-id secret/bosh-$FOUNDATION_NAME-props)
-BOSH_CLIENT_SECRET=$(vault read -field=bosh-client-secret secret/bosh-$FOUNDATION_NAME-props)
-BOSH_CA_CERT=$(vault read -field=bosh-cacert secret/bosh-$FOUNDATION_NAME-props)
+export BOSH_ENVIRONMENT=$(vault read -field=bosh-url secret/bosh-$FOUNDATION_NAME-props)
+export BOSH_CLIENT=$(vault read -field=bosh-client-id secret/bosh-$FOUNDATION_NAME-props)
+export BOSH_CLIENT_SECRET=$(vault read -field=bosh-client-secret secret/bosh-$FOUNDATION_NAME-props)
+export BOSH_CA_CERT=$(vault read -field=bosh-cacert secret/bosh-$FOUNDATION_NAME-props)
 
 bosh interpolate concourse-deploy-bosh/ci/templates/cloud-config.yml \
   -v pcf-management-network=$PCF_MANAGEMENT_PHOTON_ID \
