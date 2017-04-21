@@ -12,6 +12,11 @@ resources:
   source:
     uri: {{deploy-cloudfoundry-git-url}}
     private_key: {{git-private-key}}
+- name: bosh-backup
+  type: git
+  source:
+    uri: {{bosh-backup-git-url}}
+    private_key: {{git-private-key}}
 - name: omg-cli
   type: github-release
   check_every: 4h
@@ -121,6 +126,7 @@ jobs:
         passed: [deploy-cloudconfig]
       - get: concourse-deploy-cloudfoundry
       - get: concourse-deploy-bosh
+      - get: bosh-backup
     - task: update-pipelines
       config:
         platform: linux
@@ -175,6 +181,7 @@ jobs:
           GIT_PRIVATE_KEY: {{git-private-key}}
         inputs:
         - name: concourse-deploy-bosh
+        - name: bosh-backup
         - name: concourse-deploy-cloudfoundry
 
       
