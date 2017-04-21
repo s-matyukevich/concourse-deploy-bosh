@@ -134,7 +134,7 @@ fly -t $FOUNDATION_NAME set-pipeline -n  -p deploy-cf -c concourse-deploy-cloudf
 cat > backup-pipeline-vars.yml <<EOF
 git-private-key: |
 $(echo "$GIT_PRIVATE_KEY" | sed 's/^/  /')
-bosh-backup-git-url: $DEPLOY_CLOUDFOUNDRY_GIT_URL
+bosh-backup-git-url: $BOSH_BACKUP_GIT_URL
 bosh-pass: $bosh_pass
 bosh-url: https://$BOSH_IP
 bosh-user: admin
