@@ -138,6 +138,8 @@ bosh-backup-git-url: $BOSH_BACKUP_GIT_URL
 bosh-pass: $bosh_pass
 bosh-url: https://$BOSH_IP
 bosh-user: admin
+bosh-cacert: |
+$(echo "$bosh_cacert" | sed 's/^/  /')
 store-host: $BOSH_BACKUP_STORE_HOST
 store-user: $BOSH_BACKUP_STORE_USER
 store-password: $BOSH_BACKUP_STORE_PASSWORD
