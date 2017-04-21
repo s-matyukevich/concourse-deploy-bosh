@@ -168,7 +168,10 @@ jobs:
           DEPLOY_BLUEMEDORA_GIT_URL: {{deploy-bluemedora-git-url}}
           DEPLOY_FIREHOSE_TO_LOGINSIGHT_GIT_URL: {{deploy-firehose-to-loginsight-git-url}}
           DEPLOY_SPRING_SERVICES_GIT_URL: {{deploy-spring-services-git-url}}
-
+          BOSH-BACKUP-STORE-HOST: {{bosh-backup-store-host}}
+          BOSH_BACKUP_STORE_USER: {{bosh-backup-store-user}}
+          BOSH_BACKUP_STORE_PASSWORD: {{bosh-backup-store-password}}
+          BOSH_BACKUP_STORE_PATH: {{bosh-backup-store-path}}
           GIT_PRIVATE_KEY: {{git-private-key}}
         inputs:
         - name: concourse-deploy-bosh

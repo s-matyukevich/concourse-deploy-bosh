@@ -130,3 +130,18 @@ EOF
 
 fly -t $FOUNDATION_NAME login  -n  $FOUNDATION_NAME -c $CONCOURSE_URL -u $CONCOURSE_USER -p $CONCOURSE_PASSWORD
 fly -t $FOUNDATION_NAME set-pipeline -n  -p deploy-cf -c concourse-deploy-cloudfoundry/ci/pcf-pipeline.yml -l pcf-pipeline-vars.yml
+
+cat > backup-pipeline-vars.yml <<EOF
+git-private-key: |
+$(echo "$GIT_PRIVATE_KEY" | sed 's/^/  /')
+bosh-backup-git-url: $DEPLOY_CLOUDFOUNDRY_GIT_URL
+bosh-pass: $bosh_pass
+bosh-url: https://$BOSH_IP
+bosh-user: admin
+store-host: $BOSH_BACKUP_STORE_HOST
+store-user: $BOSH_BACKUP_STORE_USER
+store-password: $BOSH_BACKUP_STORE_PASSWORD
+store-path: $BOSH_BACKUP_STORE_PATH
+EOF
+
+fly -t $FOUNDATION_NAME set-pipeline -n  -p bosh-backup -c bosh-backup/ci/pipeline.yml -l backup-pipeline-vars.yml
