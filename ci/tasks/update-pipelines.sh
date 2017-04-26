@@ -73,6 +73,9 @@ vault-hash-password: secret/cf-$FOUNDATION_NAME-password
 vault-token: $VAULT_TOKEN
 uaa-ldap-password: $UAA_LDAP_PASSWORD
 pcf-services-static: $PCF_SERVICES_STATIC
+configserver-git-repo-url: $CONFIGSERVER_GIT_REPO_URL
+configserver-git-repo-user: $CONFIGSERVER_GIT_REPO_USERNAME
+configserver-git-repo-password: $CONFIGSERVER_GIT_REPO_PASSWORD
 vault-json-string: |
   {
     "app-domain": "$APP_DOMAIN",

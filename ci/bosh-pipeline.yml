@@ -180,6 +180,9 @@ jobs:
           BOSH_BACKUP_STORE_PASSWORD: {{bosh-backup-store-password}}
           BOSH_BACKUP_STORE_PATH: {{bosh-backup-store-path}}
           GIT_PRIVATE_KEY: {{git-private-key}}
+          CONFIGSERVER_GIT_REPO_URL: {{configserver-git-repo-url}}
+          CONFIGSERVER_GIT_REPO_USERNAME: {{configserver-git-repo-user}}
+          CONFIGSERVER_GIT_REPO_PASSWORD: {{configserver-git-repo-password}}
         inputs:
         - name: concourse-deploy-bosh
         - name: bosh-backup
